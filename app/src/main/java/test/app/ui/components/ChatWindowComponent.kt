@@ -25,8 +25,7 @@ fun ChatWindowComponent(
 ) {
 
     val chatListState = rememberLazyListState()
-
-    val scrollPosition = remember { derivedStateOf { if(scrollPos ==-1) 0 else scrollPos  } }
+    val scrollPosition = remember(scrollPos) { derivedStateOf {  scrollPos  } }
 
         Column {
 
@@ -59,7 +58,7 @@ fun ChatWindowComponent(
     }
 
 
-    LaunchedEffect(key1 = scrollPosition.value) {
+    LaunchedEffect(key1 = scrollPosition,key2 = messages.size) {
         chatListState.animateScrollToItem(scrollPosition.value)
     }
 

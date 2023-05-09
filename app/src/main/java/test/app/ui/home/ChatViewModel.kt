@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -34,13 +35,13 @@ class ChatViewModel @Inject constructor(
 
     private var _user = DEFAULT_USER
 
-    private val searchFlow: MutableStateFlow<List<ChatItem>> = MutableStateFlow(emptyList())
+    private val searchFlow: MutableSharedFlow<List<ChatItem>> = MutableSharedFlow()
 
     val uiState: StateFlow<ChatUiState> = merge( searchFlow,chatConvertor.convertChat())
         .onEach {list->
             println(list.indexOfFirst { it is MessageItem && it.highlight })
         }
-        .map { items -> ChatUiState(chatItems = items, scrollTo = items.indexOfFirst { it is MessageItem && it.highlight })
+        .map { items -> ChatUiState(chatItems = items, scrollTo = scrollToList(items))
         }.stateIn(viewModelScope, SharingStarted.Eagerly, ChatUiState(0, listOf(SectionItem("Loading ..."))))
 
 
@@ -56,7 +57,12 @@ class ChatViewModel @Inject constructor(
 
     fun userSearch(text: String){
         viewModelScope.launch(Dispatchers.IO) {
-            searchFlow.value = searchChat.search(uiState.value.chatItems, text).first()
+            searchFlow.emit(searchChat.search(uiState.value.chatItems, text).first())
         }
+    }
+
+   private fun scrollToList(items: List<ChatItem>) : Int{
+        val found = items.indexOfFirst { it is MessageItem && it.highlight }
+        return if(found != -1) found + items.size else 0
     }
 }
