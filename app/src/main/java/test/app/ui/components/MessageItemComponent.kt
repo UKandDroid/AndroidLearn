@@ -19,11 +19,13 @@ fun MessageWithBg(
     text: String,
     isUser: Boolean,
     modifier: Modifier = Modifier,
-    hasTail: Boolean = false
+    hasTail: Boolean = false,
+    highlight: Boolean = false
 ) {
     val bubbleColor = if (isUser) ColorChat1 else ColorChat2
 
     val shape = RoundedCornerShape(16.dp, 16.dp, 16.dp, if (hasTail) 0.dp else 16.dp)
+    val style = if(highlight) MaterialTheme.typography.h4  else MaterialTheme.typography.body1
 
     Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp),
         horizontalArrangement = if (isUser) Arrangement.Start else Arrangement.End) {
@@ -35,11 +37,10 @@ fun MessageWithBg(
             Text(
                 text = text,
                 color = Color.Black,
-                style = MaterialTheme.typography.body1,
+                style = style,
             )
         }
     }
-
 }
 
 @Preview

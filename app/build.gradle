@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace 'muzz.chat'
+    namespace 'test.app'
     compileSdk 33
 
     defaultConfig {
-        applicationId "muzz.chat"
+        applicationId "test.chat"
         minSdk 25
         targetSdk 33
         versionCode 1

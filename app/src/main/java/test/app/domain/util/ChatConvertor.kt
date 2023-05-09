@@ -44,7 +44,7 @@ class ChatConvertor @Inject constructor(private val cache: LocalRepository) {
             if (index == lastIndex) hasTail = true
 
             chatList.add(
-                MessageItem(message.text, isUser = message.metadata.main, hasTail)
+                MessageItem(message.text, isUser = message.metadata.main, hasTail, false)
             )
         }
 

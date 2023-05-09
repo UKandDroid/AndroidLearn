@@ -10,7 +10,7 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import test.app.ui.home.ChatViewModel
-import test.app.ui.home.ChatWindowComponent
+import test.app.ui.components.ChatWindowComponent
 import test.app.ui.theme.ChatTheme
 
 
@@ -31,13 +31,18 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background,
                 ) {
                     ChatWindowComponent(
+                        scrollPos = uiState.scrollTo,
                         messages = uiState.chatItems,
                         onMessageSend = {
                             viewModel.sendMessage(it)
                         },
                         onUserChanged = {
                             viewModel.userChanged(it)
-                        })
+                        },
+                        onSearchClick = {
+                            viewModel.userSearch(it)
+                        }
+                        )
                 }
             }
         }

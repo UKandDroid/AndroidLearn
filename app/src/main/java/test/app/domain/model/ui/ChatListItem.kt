@@ -4,4 +4,6 @@ sealed class ChatItem
 data class SectionItem(val title: String): ChatItem()
 data class MessageItem(val text: String,
                        val isUser: Boolean,
-                       var hasTail: Boolean): ChatItem()
+                       var hasTail: Boolean,
+                       var highlight: Boolean = false
+                       ): ChatItem()

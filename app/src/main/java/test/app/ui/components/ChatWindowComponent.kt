@@ -1,5 +1,6 @@
-package test.app.ui.home
+package test.app.ui.components
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -11,26 +12,29 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import test.app.domain.model.ui.ChatItem
 import test.app.domain.model.ui.MessageItem
-import test.app.ui.components.ChatListComponent
-import test.app.ui.components.MessageInputComponent
-import test.app.ui.components.SwitchUserComponent
 
 
+@SuppressLint("SuspiciousIndentation")
 @Composable
 fun ChatWindowComponent(
+    scrollPos : Int,
     messages: List<ChatItem>,
     onMessageSend: (String) -> Unit,
-    onUserChanged: (Boolean) -> Unit
+    onUserChanged: (Boolean) -> Unit,
+    onSearchClick: (String) -> Unit
 ) {
 
     val chatListState = rememberLazyListState()
 
+    val scrollPosition = remember { derivedStateOf { if(scrollPos ==-1) 0 else scrollPos  } }
+
         Column {
 
             SwitchUserComponent(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                onCheckedChange = onUserChanged)
+                modifier = Modifier.fillMaxWidth(),
+                onCheckedChange = onUserChanged,
+                onSearch = onSearchClick
+                )
 
             ChatListComponent(
                 modifier = Modifier
@@ -38,9 +42,8 @@ fun ChatWindowComponent(
                     .fillMaxHeight()
                     .background(Color.White),
                 chatListItems = messages,
-                listState = chatListState,
+                listState = chatListState
             )
-
             MessageInputComponent(
                 modifier = Modifier
                     .background(
@@ -56,8 +59,8 @@ fun ChatWindowComponent(
     }
 
 
-    LaunchedEffect(key1 = messages.size) {
-        chatListState.animateScrollToItem(0)
+    LaunchedEffect(key1 = scrollPosition.value) {
+        chatListState.animateScrollToItem(scrollPosition.value)
     }
 
 }
@@ -66,10 +69,10 @@ fun ChatWindowComponent(
 @Preview
 @Composable
 fun PreviewChat(){
-    ChatWindowComponent( messages = listOf(
+    ChatWindowComponent( 0,messages = listOf(
         MessageItem("Hi there", true, true),
         MessageItem("ohh hello", false, true),
         MessageItem("Sorry wrong number ", true, true),
 
-        ) , {},{})
+        ) , {},{ },{})
 }
