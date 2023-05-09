@@ -48,10 +48,11 @@ fun SwitchUserComponent(
 
             Row(modifier = Modifier.weight(1f), verticalAlignment = Alignment.Bottom) {
                 OutlinedTextField(
-                    modifier = Modifier.weight(0.75f).padding(10.dp),
-                    colors = TextFieldDefaults.textFieldColors(textColor = Color.Black),
                     value = searchText,
-                    onValueChange = { searchText = it })
+                    onValueChange = { searchText = it },
+                    placeholder = {Text("Search  ")},
+                    modifier = Modifier.weight(0.75f).padding(10.dp),
+                    colors = TextFieldDefaults.textFieldColors(textColor = Color.Black, placeholderColor = Color.Gray))
 
                 SearchButton(modifier = Modifier.padding(bottom = 10.dp),text = "Search") { onSearch(searchText) }
             }
