@@ -29,7 +29,7 @@ fun ChatListComponent(
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
 
-        itemsIndexed(items = chatListItems.asReversed()) { index,chatItem ->
+        items(items = chatListItems.asReversed()) {chatItem ->
             when (chatItem) {
                 is MessageItem -> {
                     MessageWithBg(

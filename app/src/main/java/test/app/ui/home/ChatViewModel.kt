@@ -5,15 +5,11 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import test.app.domain.model.ui.ChatItem
@@ -37,13 +33,9 @@ class ChatViewModel @Inject constructor(
 
     private val searchFlow: MutableSharedFlow<List<ChatItem>> = MutableSharedFlow()
 
-    val uiState: StateFlow<ChatUiState> = merge( searchFlow,chatConvertor.convertChat())
-        .onEach {list->
-            println(list.indexOfFirst { it is MessageItem && it.highlight })
-        }
-        .map { items -> ChatUiState(chatItems = items, scrollTo = scrollToList(items))
+    val uiState: StateFlow<ChatUiState> = merge( searchFlow, chatConvertor.convertChat())
+        .map { items -> ChatUiState(chatItems = items, scrollTo = getItemPositionInList(items))
         }.stateIn(viewModelScope, SharingStarted.Eagerly, ChatUiState(0, listOf(SectionItem("Loading ..."))))
-
 
     fun sendMessage(text: String) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -61,8 +53,8 @@ class ChatViewModel @Inject constructor(
         }
     }
 
-   private fun scrollToList(items: List<ChatItem>) : Int{
+   private fun getItemPositionInList(items: List<ChatItem>) : Int{
         val found = items.indexOfFirst { it is MessageItem && it.highlight }
-        return if(found != -1) found + items.size else 0
+        return if(found != -1 && items.size > 2) (items.size - found - 2) else 0
     }
 }
