@@ -1,10 +1,10 @@
-package test.app.domain.room
+package com.example.core.room
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import com.example.core.message.MessageEntity
 import kotlinx.coroutines.flow.Flow
-import test.app.data.message.MessageEntity
 
 @Dao
 interface MessageDao {

@@ -2,12 +2,12 @@ package test.app.data.di
 
 import android.content.Context
 import androidx.room.Room
+import com.example.core.room.MessageDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import test.app.domain.room.MessageDatabase
 import javax.inject.Singleton
 
 
