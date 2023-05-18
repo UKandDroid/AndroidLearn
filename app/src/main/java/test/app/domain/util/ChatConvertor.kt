@@ -2,9 +2,9 @@ package test.app.domain.util
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import test.app.domain.model.ui.ChatItem
+import test.app.domain.model.ui.ScreenListItem
 import test.app.domain.model.ui.Message
-import test.app.domain.model.ui.MessageItem
+import test.app.domain.model.ui.EventItem
 import test.app.domain.model.ui.SectionItem
 import test.app.domain.repo.LocalRepository
 
@@ -12,15 +12,15 @@ import javax.inject.Inject
 
 class ChatConvertor @Inject constructor(private val cache: LocalRepository) {
 
-    fun convertChat(): Flow<List<ChatItem>> {
+    fun convertChat(): Flow<List<ScreenListItem>> {
         return cache.getAllMessages().convert().map {
             it.convert()
         }
     }
 
-    private fun List<Message>.convert(): List<ChatItem> {
+    private fun List<Message>.convert(): List<ScreenListItem> {
 
-        val chatList = mutableListOf<ChatItem>()
+        val chatList = mutableListOf<ScreenListItem>()
 
         forEachIndexed { index, message ->
             val previousMessage = this.getOrNull(index - 1)
@@ -44,7 +44,7 @@ class ChatConvertor @Inject constructor(private val cache: LocalRepository) {
             if (index == lastIndex) hasTail = true
 
             chatList.add(
-                MessageItem(message.text, isUser = message.metadata.main, hasTail, false)
+                EventItem(message.text, isUser = message.metadata.main, hasTail, false)
             )
         }
 

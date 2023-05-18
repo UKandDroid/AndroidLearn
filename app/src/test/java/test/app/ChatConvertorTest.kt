@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import test.app.domain.model.MessageModel
-import test.app.domain.model.ui.MessageItem
+import test.app.domain.model.ui.EventItem
 import test.app.domain.model.ui.SectionItem
 import test.app.domain.repo.LocalRepository
 import test.app.domain.util.ChatConvertor
@@ -60,7 +60,7 @@ class ChatConvertorTest {
         verify(repository, times(1)).getAllMessages()
         resultFlow.first().let {
 
-            (it[1] as MessageItem).apply {
+            (it[1] as EventItem).apply {
                 assertEquals(true, hasTail)
             }
         }
@@ -83,7 +83,7 @@ class ChatConvertorTest {
                 assertTrue(title.isNotEmpty())
             }
 
-            (it[1] as MessageItem).apply {
+            (it[1] as EventItem).apply {
                 assertEquals("Hi there!", text)
                 assertEquals(true, isUser)
                 assertEquals(false, hasTail)
@@ -106,7 +106,7 @@ class ChatConvertorTest {
 
             assertEquals(3, it.size)
 
-            (it[2] as MessageItem).apply {
+            (it[2] as EventItem).apply {
                 assertEquals("Did you miss me!", text)
                 assertEquals(true, isUser)
                 assertEquals(true, hasTail)
@@ -131,13 +131,13 @@ class ChatConvertorTest {
                 assertTrue(title.isNotEmpty())
             }
 
-            (it[1] as MessageItem).run {
+            (it[1] as EventItem).run {
                 assertEquals("Hi there!", text)
                 assertEquals(true, isUser)
                 assertEquals(false, hasTail)
             }
 
-            (it[2] as MessageItem).run {
+            (it[2] as EventItem).run {
                 assertEquals("Did you miss me!", text)
                 assertEquals(true, isUser)
                 assertEquals(true, hasTail)

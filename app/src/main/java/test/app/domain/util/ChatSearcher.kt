@@ -1,17 +1,16 @@
 package test.app.domain.util
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
-import test.app.domain.model.ui.ChatItem
-import test.app.domain.model.ui.MessageItem
+import test.app.domain.model.ui.ScreenListItem
+import test.app.domain.model.ui.EventItem
 import javax.inject.Inject
 
 class ChatSearcher @Inject constructor() {
 
-  suspend fun search(list : List<ChatItem>, searchText: String) : Flow<List<ChatItem>> {
+  suspend fun search(list : List<ScreenListItem>, searchText: String) : Flow<List<ScreenListItem>> {
       list.map {
-          if(it is MessageItem) {
+          if(it is EventItem) {
               it.highlight = it.text == searchText
          }
       }

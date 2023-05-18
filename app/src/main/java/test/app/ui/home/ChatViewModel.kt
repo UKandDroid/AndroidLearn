@@ -12,8 +12,8 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import test.app.domain.model.ui.ChatItem
-import test.app.domain.model.ui.MessageItem
+import test.app.domain.model.ui.ScreenListItem
+import test.app.domain.model.ui.EventItem
 import test.app.domain.model.ui.SectionItem
 import test.app.domain.repo.LocalRepository
 import test.app.domain.util.ChatConvertor
@@ -31,7 +31,7 @@ class ChatViewModel @Inject constructor(
 
     private var _user = DEFAULT_USER
 
-    private val searchFlow: MutableSharedFlow<List<ChatItem>> = MutableSharedFlow()
+    private val searchFlow: MutableSharedFlow<List<ScreenListItem>> = MutableSharedFlow()
 
     val uiState: StateFlow<ChatUiState> = merge( searchFlow, chatConvertor.convertChat())
         .map { items -> ChatUiState(chatItems = items, scrollTo = getItemPositionInList(items))
@@ -53,8 +53,8 @@ class ChatViewModel @Inject constructor(
         }
     }
 
-   private fun getItemPositionInList(items: List<ChatItem>) : Int{
-        val found = items.indexOfFirst { it is MessageItem && it.highlight }
+   private fun getItemPositionInList(items: List<ScreenListItem>) : Int{
+        val found = items.indexOfFirst { it is EventItem && it.highlight }
         return if(found != -1 && items.size > 2) (items.size - found - 2) else 0
     }
 }

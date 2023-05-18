@@ -8,14 +8,14 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import test.app.domain.model.ui.ChatItem
-import test.app.domain.model.ui.MessageItem
+import test.app.domain.model.ui.ScreenListItem
+import test.app.domain.model.ui.EventItem
 import test.app.domain.model.ui.SectionItem
 
 @Composable
 fun ChatListComponent(
     modifier: Modifier,
-    chatListItems: List<ChatItem>,
+    eventList: List<ScreenListItem>,
     listState: LazyListState,
 ) {
     LazyColumn(
@@ -25,9 +25,9 @@ fun ChatListComponent(
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
 
-        items(items = chatListItems.asReversed()) {chatItem ->
+        items(items = eventList.asReversed()) { chatItem ->
             when (chatItem) {
-                is MessageItem -> {
+                is EventItem -> {
                     MessageWithBg(
                         text = chatItem.text,
                         isUser = chatItem.isUser,

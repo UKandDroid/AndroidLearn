@@ -6,7 +6,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.test.*
-import test.app.domain.model.ui.MessageItem
+import test.app.domain.model.ui.EventItem
 import test.app.domain.model.ui.User
 import test.app.domain.repo.LocalRepository
 import test.app.ui.home.ChatUiState
@@ -80,5 +80,5 @@ import org.mockito.kotlin.whenever
     }
 
 
-var messageItem = (MessageItem("hi there", false, false))
+var messageItem = (EventItem("hi there", false, false))
 var chatUiState = ChatUiState(listOf( messageItem) )
