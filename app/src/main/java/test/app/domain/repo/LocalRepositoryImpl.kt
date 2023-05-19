@@ -41,7 +41,7 @@ class LocalRepositoryImpl @Inject constructor(
 
     override suspend fun saveEvents(events: List<Event>) {
         eventsDb.putEvent(
-            events.map { EventEntity(name = it.name, desc = it.desc, url = it.images.firstOrEmpty()) })
+            events.map { EventEntity(name = it.name, desc = it.locale, url = it.images.firstOrEmpty()) })
         }
 
 }

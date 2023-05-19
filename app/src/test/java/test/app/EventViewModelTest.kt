@@ -2,6 +2,8 @@ package test.app
 
 import androidx.compose.runtime.State
 import com.example.core.message.EventEntity
+import io.mockk.coEvery
+import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -12,9 +14,6 @@ import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import org.mockito.Mock
-import org.mockito.MockitoAnnotations
-import org.mockito.kotlin.whenever
 import test.app.domain.model.ui.EventItem
 import test.app.domain.repo.LocalRepository
 import test.app.ui.home.EventViewModel
@@ -24,8 +23,7 @@ import test.app.ui.home.UiStates
 @OptIn(ExperimentalCoroutinesApi::class)
 class EventViewModelTest {
 
-    @Mock
-    private lateinit var mockLocalRepository: LocalRepository
+    private var mockLocalRepository = mockk<LocalRepository>()
     private lateinit var testSubject: EventViewModel
     private val testDispatcher = StandardTestDispatcher()
 
@@ -33,7 +31,6 @@ class EventViewModelTest {
     @Before
     fun setup() {
         Dispatchers.setMain(testDispatcher)
-        MockitoAnnotations.openMocks(this)
         testSubject = EventViewModel(mockLocalRepository)
     }
 
@@ -45,8 +42,8 @@ class EventViewModelTest {
     @Test
     fun `refreshEvents should update uiState with list of events when successful`() = runTest {
 
-        whenever(mockLocalRepository.refreshEvents()).thenReturn(true)
-        whenever(mockLocalRepository.getAllEvents()).thenReturn(mockEventList)
+        coEvery { mockLocalRepository.refreshEvents() } returns  true
+        coEvery { mockLocalRepository.getAllEvents() } returns  mockEventList
 
         testSubject.refreshEvents()
         testDispatcher.scheduler.advanceUntilIdle()
@@ -57,7 +54,7 @@ class EventViewModelTest {
     @Test
     fun `refreshEvents should update uiState with error message when unsuccessful`() = runTest {
 
-        whenever(mockLocalRepository.refreshEvents()).thenReturn(false)
+        coEvery { mockLocalRepository.refreshEvents() } returns  false
 
         testSubject.refreshEvents()
         testDispatcher.scheduler.advanceUntilIdle()
@@ -68,9 +65,9 @@ class EventViewModelTest {
     @Test
     fun `eventSearch should update uiState with list of events when search result is not empty`() = runTest {
 
-        whenever(mockLocalRepository.refreshEvents()).thenReturn(true)
-        whenever(mockLocalRepository.getEvents("search")).thenReturn(mockEventList)
-        whenever(mockLocalRepository.getAllEvents()).thenReturn(mockEventList)
+        coEvery { mockLocalRepository.refreshEvents() } returns  true
+        coEvery { mockLocalRepository.getAllEvents() } returns  mockEventList
+        coEvery { mockLocalRepository.getEvents("search") } returns  mockEventList
 
         testSubject.eventSearch("search")
         testDispatcher.scheduler.advanceUntilIdle()
@@ -81,9 +78,9 @@ class EventViewModelTest {
     @Test
     fun `eventSearch should update uiState with no matching items message when search result is empty`() = runTest {
 
-        whenever(mockLocalRepository.refreshEvents()).thenReturn(true)
-        whenever(mockLocalRepository.getAllEvents()).thenReturn(emptyList())
-        whenever(mockLocalRepository.getEvents("search")).thenReturn(emptyList<EventEntity>())
+        coEvery { mockLocalRepository.refreshEvents() } returns  true
+        coEvery { mockLocalRepository.getAllEvents() } returns  emptyList<EventEntity>()
+        coEvery { mockLocalRepository.getEvents("search") } returns  emptyList<EventEntity>()
 
         testSubject.eventSearch("search")
         testDispatcher.scheduler.advanceUntilIdle()
