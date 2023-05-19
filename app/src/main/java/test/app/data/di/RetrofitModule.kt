@@ -1,12 +1,13 @@
 package test.app.data.di
 
-import com.example.network.MainRepositoryImpl
+import com.example.network.NetworkRepositoryImpl
 import com.example.network.RemoteApi
 import com.example.network.Retrofit
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -15,10 +16,15 @@ object RetrofitModule {
 
     @Singleton
     @Provides
-    fun provideApi() = Retrofit().provideApi()
+    @Named("ApiKey")
+    fun apiKey() = "DW0E98NrxUIfDDtNN7ijruVSm60ryFLX"
 
     @Singleton
     @Provides
-    fun provideRepository(api: RemoteApi) = MainRepositoryImpl(api)
+    fun provideApi( @Named("ApiKey") apikey: String) = Retrofit().provideApi(apikey)
+
+    @Singleton
+    @Provides
+    fun provideRepository(api: RemoteApi) = NetworkRepositoryImpl(api)
 
 }
