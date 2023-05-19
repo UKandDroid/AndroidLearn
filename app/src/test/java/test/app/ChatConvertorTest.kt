@@ -4,11 +4,9 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
-import test.app.domain.model.MessageModel
 import test.app.domain.model.ui.EventItem
-import test.app.domain.model.ui.SectionItem
+import test.app.domain.model.ui.MessageItem
 import test.app.domain.repo.LocalRepository
-import test.app.domain.util.ChatConvertor
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -38,12 +36,12 @@ class ChatConvertorTest {
     @Test
     fun `test empty chat`() = runTest {
 
-        val mockFlow = flowOf(emptyList<MessageModel>())
-        whenever(repository.getAllMessages()).thenReturn(mockFlow)
+        val mockFlow = flowOf(emptyList<EventModel>())
+        whenever(repository.getAllEvents()).thenReturn(mockFlow)
 
         val resultFlow = testSubject.convertChat()
 
-        verify(repository, times(1)).getAllMessages()
+        verify(repository, times(1)).getAllEvents()
         assertEquals(0, resultFlow.first().size)
 
     }
@@ -53,15 +51,15 @@ class ChatConvertorTest {
 
         val mockFlow = flowOf(SINGLE_MESSAGE)
 
-        whenever(repository.getAllMessages()).thenReturn(mockFlow)
+        whenever(repository.getAllEvents()).thenReturn(mockFlow)
 
         val resultFlow = testSubject.convertChat()
 
-        verify(repository, times(1)).getAllMessages()
+        verify(repository, times(1)).getAllEvents()
         resultFlow.first().let {
 
             (it[1] as EventItem).apply {
-                assertEquals(true, hasTail)
+                assertEquals(true, url)
             }
         }
     }
@@ -70,23 +68,23 @@ class ChatConvertorTest {
     fun `consecutive message does not have tail`() = runTest {
         val mockFlow = flowOf(DOUBLE_MESSAGE)
 
-        whenever(repository.getAllMessages()).thenReturn(mockFlow)
+        whenever(repository.getAllEvents()).thenReturn(mockFlow)
 
         val resultFlow = testSubject.convertChat()
 
-        verify(repository, times(1)).getAllMessages()
+        verify(repository, times(1)).getAllEvents()
         resultFlow.first().let {
 
             assertEquals(3, it.size)
 
-            (it[0] as SectionItem).apply {
-                assertTrue(title.isNotEmpty())
+            (it[0] as MessageItem).apply {
+                assertTrue(message.isNotEmpty())
             }
 
             (it[1] as EventItem).apply {
-                assertEquals("Hi there!", text)
-                assertEquals(true, isUser)
-                assertEquals(false, hasTail)
+                assertEquals("Hi there!", name)
+                assertEquals(true, desc)
+                assertEquals(false, url)
             }
 
         }
@@ -97,19 +95,19 @@ class ChatConvertorTest {
     fun `last message has tail`() = runTest {
         val mockFlow = flowOf(DOUBLE_MESSAGE)
 
-        whenever(repository.getAllMessages()).thenReturn(mockFlow)
+        whenever(repository.getAllEvents()).thenReturn(mockFlow)
 
         val resultFlow = testSubject.convertChat()
 
-        verify(repository, times(1)).getAllMessages()
+        verify(repository, times(1)).getAllEvents()
         resultFlow.first().let {
 
             assertEquals(3, it.size)
 
             (it[2] as EventItem).apply {
-                assertEquals("Did you miss me!", text)
-                assertEquals(true, isUser)
-                assertEquals(true, hasTail)
+                assertEquals("Did you miss me!", name)
+                assertEquals(true, desc)
+                assertEquals(true, url)
             }
         }
     }
@@ -118,29 +116,29 @@ class ChatConvertorTest {
     fun `test Multiple Message Different User After`() = runTest {
         val mockFlow = flowOf(MULTIPLE_CHAT)
 
-        whenever(repository.getAllMessages()).thenReturn(mockFlow)
+        whenever(repository.getAllEvents()).thenReturn(mockFlow)
 
         val resultFlow = testSubject.convertChat()
 
-        verify(repository, times(1)).getAllMessages()
+        verify(repository, times(1)).getAllEvents()
         resultFlow.first().let {
 
             assertEquals(4, it.size)
 
-            (it[0] as SectionItem).run {
-                assertTrue(title.isNotEmpty())
+            (it[0] as MessageItem).run {
+                assertTrue(message.isNotEmpty())
             }
 
             (it[1] as EventItem).run {
-                assertEquals("Hi there!", text)
-                assertEquals(true, isUser)
-                assertEquals(false, hasTail)
+                assertEquals("Hi there!", name)
+                assertEquals(true, desc)
+                assertEquals(false, url)
             }
 
             (it[2] as EventItem).run {
-                assertEquals("Did you miss me!", text)
-                assertEquals(true, isUser)
-                assertEquals(true, hasTail)
+                assertEquals("Did you miss me!", name)
+                assertEquals(true, desc)
+                assertEquals(true, url)
             }
         }
     }
@@ -151,16 +149,16 @@ class ChatConvertorTest {
     val MESSAGE_TIME3 = 3000L
 
     private val SINGLE_MESSAGE = listOf(
-        MessageModel("Hi there!", true, MESSAGE_TIME1)
+        EventModel("Hi there!", true, MESSAGE_TIME1)
     )
     private val DOUBLE_MESSAGE = listOf(
-        MessageModel("Hi there!", true, MESSAGE_TIME1),
-        MessageModel("Did you miss me!", true, MESSAGE_TIME2)
+        EventModel("Hi there!", true, MESSAGE_TIME1),
+        EventModel("Did you miss me!", true, MESSAGE_TIME2)
     )
     private val MULTIPLE_CHAT = listOf(
-        MessageModel("Hi there!", true, MESSAGE_TIME1),
-        MessageModel("Did you miss me!", true, MESSAGE_TIME2),
-        MessageModel("Not Really!", false, MESSAGE_TIME3)
+        EventModel("Hi there!", true, MESSAGE_TIME1),
+        EventModel("Did you miss me!", true, MESSAGE_TIME2),
+        EventModel("Not Really!", false, MESSAGE_TIME3)
     )
 
 }

@@ -1,11 +1,13 @@
 package test.app.domain.repo
 
+import com.example.core.message.EventEntity
 import kotlinx.coroutines.flow.Flow
-import test.app.domain.model.MessageModel
 
 interface LocalRepository {
 
-    fun getAllMessages(): Flow<List<MessageModel>>
+    fun getAllEvents(): Flow<List<EventEntity>>
 
-    fun saveMessage(message: String, main: Boolean)
+    fun saveEvent(name: String, url: String, desc: String)
+
+    fun refreshEvents() : Boolean
 }

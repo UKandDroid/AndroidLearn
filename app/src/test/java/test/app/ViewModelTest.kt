@@ -9,9 +9,7 @@ import kotlinx.coroutines.test.*
 import test.app.domain.model.ui.EventItem
 import test.app.domain.model.ui.User
 import test.app.domain.repo.LocalRepository
-import test.app.ui.home.ChatUiState
-import test.app.ui.home.ChatViewModel
-import test.app.domain.util.ChatConvertor
+import test.app.ui.home.EventViewModel
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -24,7 +22,7 @@ import org.mockito.kotlin.whenever
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(MockitoJUnitRunner::class)
-    class ChatViewModelTest {
+    class EventViewModelTest {
 
         private val testDispatcher = StandardTestDispatcher()
 
@@ -34,7 +32,7 @@ import org.mockito.kotlin.whenever
         private lateinit var chatConvertor: ChatConvertor
 
         // Create instance of ChatViewModel
-        private lateinit var testSubject: ChatViewModel
+        private lateinit var testSubject: EventViewModel
 
         @Before
         fun setUp() {
@@ -43,7 +41,7 @@ import org.mockito.kotlin.whenever
             val chatItems = listOf(messageItem)
             whenever(chatConvertor.convertChat()).thenReturn(MutableStateFlow(chatItems))
 
-            testSubject = ChatViewModel(localRepository, chatConvertor)
+            testSubject = EventViewModel(localRepository, chatConvertor)
         }
 
         @After
@@ -62,7 +60,7 @@ import org.mockito.kotlin.whenever
             delay(100)
 
             // Then
-            verify(localRepository).saveMessage(text, user.main)
+            verify(localRepository).saveEvent(text, user.main)
         }
 
         @Test

@@ -10,10 +10,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import test.app.domain.model.ui.ScreenListItem
 import test.app.domain.model.ui.EventItem
-import test.app.domain.model.ui.SectionItem
+import test.app.domain.model.ui.MessageItem
 
 @Composable
-fun ChatListComponent(
+fun EventListComponent(
     modifier: Modifier,
     eventList: List<ScreenListItem>,
     listState: LazyListState,
@@ -25,26 +25,24 @@ fun ChatListComponent(
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
 
-        items(items = eventList.asReversed()) { chatItem ->
-            when (chatItem) {
+        items(items = eventList) { event ->
+            when (event) {
                 is EventItem -> {
-                    MessageWithBg(
-                        text = chatItem.text,
-                        isUser = chatItem.isUser,
-                        hasTail = chatItem.hasTail,
-                        highlight = chatItem.highlight,
-                        modifier = Modifier.defaultMinSize(minWidth = 30.dp)
+                    EventItemComponent(
+                        name = event.name,
+                        desc = event.desc,
+                        imageUrl = event.url,
                     )
                 }
 
-                is SectionItem -> {
-                    SectionItemComponent(title = chatItem.title)
+                is MessageItem -> {
+                    MessageItemComponent(title = event.message)
                 }
             }
         }
 
         item {
-            SectionItemComponent("This is the start of your chat!")
+            MessageItemComponent("This is the start of your chat!")
         }
     }
 

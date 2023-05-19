@@ -14,9 +14,9 @@ import  test.app.R
 
 @Composable
 fun EventItemComponent(
-    headerText: String,
-    descriptionText: String,
-    imageResId: Int
+    name: String,
+    desc: String,
+    imageUrl: String
 ) {
     Card(
         modifier = Modifier.fillMaxWidth().padding(8.dp),
@@ -24,18 +24,18 @@ fun EventItemComponent(
         Row(
             modifier = Modifier.padding(8.dp)) {
             Image(
-                painter = painterResource(imageResId),
+                painter = painterResource(imageUrl),
                 contentDescription = null, // Provide a meaningful description here
                 modifier = Modifier.size(100.dp).padding(end = 16.dp))
 
             Column {
                 Text(
-                    text = headerText,
+                    text = name,
                     style = MaterialTheme.typography.h6,
                     modifier = Modifier.padding(bottom = 4.dp)
                 )
                 Text(
-                    text = descriptionText,
+                    text = desc,
                     style = MaterialTheme.typography.body1
                 )
             }
@@ -47,8 +47,8 @@ fun EventItemComponent(
 @Composable
 fun PreviewImageWithTextCard() {
     EventItemComponent(
-        headerText = "Disco somewhere or anyw",
-        descriptionText = "Artist inclued",
-        imageResId = R.drawable.ic_launcher_foreground
+        name = "Disco somewhere or anyw",
+        desc = "Artist inclued",
+        imageUrl = "https://somewhere.drawable.ic_launcher_foreground"
     )
 }

@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import test.app.ui.theme.ForestFrost
 
 @Composable
-fun SectionItemComponent(title: String) {
+fun MessageItemComponent(title: String) {
     Column(modifier = Modifier
         .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally

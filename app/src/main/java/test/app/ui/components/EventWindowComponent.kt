@@ -9,18 +9,15 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import test.app.domain.model.ui.ScreenListItem
 import test.app.domain.model.ui.EventItem
 
 
 @SuppressLint("SuspiciousIndentation")
 @Composable
-fun ChatWindowComponent(
+fun EventWindowComponent(
     scrollPos : Int,
-    messages: List<ScreenListItem>,
-    onMessageSend: (String) -> Unit,
-    onUserChanged: (Boolean) -> Unit,
+    events: List<ScreenListItem>,
     onSearchClick: (String) -> Unit
 ) {
 
@@ -28,36 +25,25 @@ fun ChatWindowComponent(
     val scrollPosition = remember(scrollPos) { derivedStateOf {  scrollPos  } }
 
         Column {
-
             SearchComponent(
                 modifier = Modifier.fillMaxWidth(),
                 onSearch = onSearchClick
                 )
 
-            ChatListComponent(
+            EventListComponent(
                 modifier = Modifier
                     .weight(1.0f)
                     .fillMaxHeight()
                     .background(Color.White),
-                eventList = messages,
+                eventList = events,
                 listState = chatListState
             )
-            MessageInputComponent(
-                modifier = Modifier
-                    .background(
-                        color = MaterialTheme.colors.surface
-                    )
-                    .padding(10.dp)
-                    .fillMaxWidth(),
-                onSendPressed = {
-                    onMessageSend(it)
-                }
-            )
+
 
     }
 
 
-    LaunchedEffect(key1 = scrollPosition,key2 = messages.size) {
+    LaunchedEffect(key1 = scrollPosition,key2 = events.size) {
         chatListState.animateScrollToItem(scrollPosition.value)
     }
 
@@ -67,10 +53,10 @@ fun ChatWindowComponent(
 @Preview
 @Composable
 fun PreviewChat(){
-    ChatWindowComponent( 0,messages = listOf(
-        EventItem("Hi there", true, true),
-        EventItem("ohh hello", false, true),
-        EventItem("Sorry wrong number ", true, true),
+    EventWindowComponent( 0,events = listOf(
+        EventItem("Hi there", "true", "true"),
+        EventItem("ohh hello", "false", "true"),
+        EventItem("Sorry wrong number ", "true", "true"),
 
-        ) , {},{ },{})
+        ) , {})
 }

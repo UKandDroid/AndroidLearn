@@ -1,28 +1,31 @@
 package test.app.domain.repo
 
+import com.example.core.message.EventEntity
+import com.example.core.message.EventModel
+import com.example.core.room.EventDao
 import kotlinx.coroutines.flow.Flow
-import com.example.core.room.MessageDao
-import com.example.core.message.MessageEntity
-import test.app.domain.util.convert
-import test.app.domain.model.MessageModel
 
 import javax.inject.Inject
 
-class LocalRepositoryImpl @Inject constructor(private val messageDao: com.example.core.room.MessageDao)
+class LocalRepositoryImpl @Inject constructor(private val messageDao: EventDao)
     : LocalRepository {
 
-    override fun getAllMessages(): Flow<List<MessageModel>> {
-        return messageDao.getMessages().convert()
+    override fun getAllEvents(): Flow<List<EventModel>> {
+        return messageDao.getEvents()
+    }
+
+    override fun refreshEvents(): Boolean {
+        TODO("Not yet implemented")
     }
 
 
-    override fun saveMessage(message: String, main: Boolean) {
+    override fun saveEvent(name: String, desc: String, url : String) {
 
-        messageDao.putMessage(
-            com.example.core.message.MessageEntity(
-                main = main,
-                text = message,
-                sendTime = System.currentTimeMillis()
+        messageDao.putEvent(
+            EventEntity(
+                name = name,
+                desc = desc,
+                url = url
             )
         )
     }

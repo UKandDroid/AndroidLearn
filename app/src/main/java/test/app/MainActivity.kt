@@ -7,17 +7,16 @@ import androidx.activity.viewModels
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.getValue
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dagger.hilt.android.AndroidEntryPoint
-import test.app.ui.home.ChatViewModel
-import test.app.ui.components.ChatWindowComponent
+import test.app.ui.home.EventViewModel
+import test.app.ui.components.EventWindowComponent
 import test.app.ui.theme.ChatTheme
 
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private val viewModel: ChatViewModel by viewModels()
+    private val viewModel: EventViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,22 +24,16 @@ class MainActivity : ComponentActivity() {
         setContent {
             ChatTheme {
 
-                val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+                val uiState by viewModel.uiState
 
                 Surface(
                     color = MaterialTheme.colors.background,
                 ) {
-                    ChatWindowComponent(
-                        scrollPos = uiState.scrollTo,
-                        messages = uiState.chatItems,
-                        onMessageSend = {
-                            viewModel.sendMessage(it)
-                        },
-                        onUserChanged = {
-                            viewModel.userChanged(it)
-                        },
+                    EventWindowComponent(
+                        scrollPos =0,
+                        events = uiState.items,
                         onSearchClick = {
-                            viewModel.userSearch(it)
+                            viewModel.eventSearch(it)
                         }
                         )
                 }
