@@ -20,13 +20,11 @@ import test.app.ui.home.EventViewModel
 @SuppressLint("SuspiciousIndentation")
 @Composable
 fun EventWindowComponent(
-    scrollPos : Int,
     events: List<ScreenListItem>,
     onSearchClick: (String) -> Unit
 ) {
 
     val chatListState = rememberLazyListState()
-    val scrollPosition = remember(scrollPos) { derivedStateOf {  scrollPos  } }
     val viewModel = viewModel<EventViewModel>()
     val isLoading by viewModel.isLoading
     val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = isLoading)
@@ -52,8 +50,8 @@ fun EventWindowComponent(
     }
 
 
-    LaunchedEffect(key1 = scrollPosition,key2 = events.size) {
-        chatListState.animateScrollToItem(scrollPosition.value)
+    LaunchedEffect(key1 = events.size) {
+        chatListState.animateScrollToItem(0)
     }
 
 }
@@ -62,7 +60,7 @@ fun EventWindowComponent(
 @Preview
 @Composable
 fun PreviewChat(){
-    EventWindowComponent( 0,events = listOf(
+    EventWindowComponent( events = listOf(
         EventItem("Hi there", "true", "true"),
         EventItem("ohh hello", "false", "true"),
         EventItem("Sorry wrong number ", "true", "true"),

@@ -27,7 +27,6 @@ class MainActivity : ComponentActivity() {
 
                 Surface(color = MaterialTheme.colors.background,) {
                     EventWindowComponent(
-                        scrollPos =0,
                         events = uiState.items,
                         onSearchClick = {
                             viewModel.eventSearch(it)

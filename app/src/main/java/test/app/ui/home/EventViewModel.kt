@@ -21,7 +21,7 @@ class EventViewModel @Inject constructor(
     private var _uiState: MutableState<UiStates> = mutableStateOf(UiStates.EventsUpdate("Loading..."))
     val uiState: State<UiStates> = _uiState
     private val _isLoading = mutableStateOf(false)
-    val isLoading = _isLoading
+    val isLoading: State<Boolean> = _isLoading
 
     init {
       refreshEvents()
