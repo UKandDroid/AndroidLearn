@@ -23,11 +23,10 @@ import test.app.ui.home.UiStates
 @OptIn(ExperimentalCoroutinesApi::class)
 class EventViewModelTest {
 
-    private var mockLocalRepository = mockk<LocalRepository>()
+    private val mockLocalRepository = mockk<LocalRepository>()
     private lateinit var testSubject: EventViewModel
     private val testDispatcher = StandardTestDispatcher()
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     @Before
     fun setup() {
         Dispatchers.setMain(testDispatcher)
