@@ -25,13 +25,10 @@ import test.app.domain.repo.LocalRepositoryImpl
 @OptIn(ExperimentalCoroutinesApi::class)
 class LocalRepositoryImplTest {
 
-
     private val mockEventsDb = mockk<EventDatabase>()
-    private  val mockNetworkRepository = mockk< NetworkRepository>()
-
+    private val mockNetworkRepository = mockk< NetworkRepository>()
     private lateinit var localRepository: LocalRepositoryImpl
     private val testDispatcher = StandardTestDispatcher()
-
 
     @Before
     fun setup() {
@@ -46,7 +43,7 @@ class LocalRepositoryImplTest {
 
     @Test
     fun `getAllEvents should return a list of EventModel`() = runTest {
-        val expectedEvents = listOf(EventModel(0,"Event 1", "Description 1", "URL 1"))
+        val expectedEvents = listOf(EventModel(0,"Queen of me", "Tour", "some_url"))
         every{mockEventsDb.getEvents()} returns expectedEvents
 
         val result = localRepository.getAllEvents()
@@ -56,9 +53,9 @@ class LocalRepositoryImplTest {
 
     @Test
     fun `getEvents should return a list of EventEntity`() = runTest {
-        val name = "example"
-        val expectedEvents = listOf(EventEntity(0,"Event 1", "Description 1", "URL 1"))
-       every{mockEventsDb.getEvents(name)} returns expectedEvents
+        val name = "Shania Twain"
+        val expectedEvents = listOf(EventEntity(0,"Queen of me", "Tour", "some_url"))
+       every{ mockEventsDb.getEvents(name)} returns expectedEvents
 
         val result = localRepository.getEvents(name)
 

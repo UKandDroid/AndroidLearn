@@ -89,7 +89,7 @@ class EventViewModelTest {
     }
 
     private val mockEventList = listOf(
-        EventEntity(0,"Event 1", "Description 1", "URL 1"),
-        EventEntity(1,"Event 2", "Description 2", "URL 2")
+        EventEntity(0,"Queen of me 1", "en-us-1", "url_1"),
+        EventEntity(1,"Queen of me 2", "en-us-2", "url_2")
     )
 }
