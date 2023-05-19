@@ -1,11 +1,11 @@
 package com.example.network
 
-import com.example.core.UserChat
+import com.example.core.ListEvents
 
 
 /**
  *Created by Ubaid Khaliq
  */
 interface NetworkRepository {
-    suspend fun getAllMessages(): ResponseWrapper<List<UserChat>>
+    suspend fun getAllEvents(): ResponseWrapper<ListEvents>
 }

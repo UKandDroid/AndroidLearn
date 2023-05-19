@@ -1,6 +1,6 @@
 package com.example.network
 
-import com.example.core.UserChat
+import com.example.core.ListEvents
 import java.lang.Exception
 
 
@@ -11,18 +11,18 @@ import java.lang.Exception
 class NetworkRepositoryImpl constructor(val remoteApi: RemoteApi) : NetworkRepository {
     private val EXCEPTION: Int = -1
 
-    override suspend fun getAllMessages(): ResponseWrapper<List<UserChat>> {
+    override suspend fun getAllEvents(): ResponseWrapper<ListEvents> {
         return try {
             val response = remoteApi.getEvents()
             val result = response.body()
             if (response.isSuccessful && result != null) {
-                ResponseWrapper.Success(result)
+                ResponseWrapper.ApiSuccess(ListEvents(result._embedded.events))
             } else {
-                ResponseWrapper.Error(response.code(), response.message())
+                ResponseWrapper.ApiError(response.code(), response.message())
             }
         } catch (e: Exception) {
             println("Error: $e")
-            ResponseWrapper.Error(EXCEPTION, "An $e occurred")
+            ResponseWrapper.ApiError(EXCEPTION, "An $e occurred")
         }
     }
 

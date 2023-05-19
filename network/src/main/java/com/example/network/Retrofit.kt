@@ -18,10 +18,14 @@ class Retrofit  {
 
 
     private fun httpClient(apiKey: String) = OkHttpClient.Builder().addInterceptor(Interceptor { chain ->
-        val originalRequest = chain.request()
-        val modifiedRequest = originalRequest.newBuilder()
-            .header("apikey", apiKey)
+        val request = chain.request()
+        val urlWithApi = request.url.newBuilder().apply {
+                addQueryParameter("apikey", apiKey)
+        }.build()
+
+        val newRequest = request.newBuilder()
+            .url(urlWithApi)
             .build()
-        chain.proceed(modifiedRequest)
+        chain.proceed(newRequest)
     }).build()
 }

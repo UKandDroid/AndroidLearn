@@ -18,4 +18,7 @@ interface EventDao {
     @Insert
     fun putEvent(entity: EventEntity)
 
+    @Insert
+    fun putEvent(entity: List<EventEntity>)
+
 }

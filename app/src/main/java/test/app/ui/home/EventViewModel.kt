@@ -17,10 +17,6 @@ class EventViewModel @Inject constructor(
     private val localRepository: LocalRepository,
 ) : ViewModel() {
 
-    init {
-
-    }
-
     var _uiState: MutableState<UiStates> = mutableStateOf(EventsLoading())
     val uiState: State<UiStates> = _uiState
     private val _isLoading = mutableStateOf(false)
@@ -30,7 +26,7 @@ class EventViewModel @Inject constructor(
     fun refreshEvents() {
         viewModelScope.launch {
             _isLoading.value = true
-            delay(2000L)
+            localRepository.refreshEvents()
             _isLoading.value = false
         }
     }

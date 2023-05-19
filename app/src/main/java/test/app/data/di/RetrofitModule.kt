@@ -1,5 +1,6 @@
 package test.app.data.di
 
+import com.example.network.NetworkRepository
 import com.example.network.NetworkRepositoryImpl
 import com.example.network.RemoteApi
 import com.example.network.Retrofit
@@ -25,6 +26,6 @@ object RetrofitModule {
 
     @Singleton
     @Provides
-    fun provideRepository(api: RemoteApi) = NetworkRepositoryImpl(api)
+    fun provideRepository(api: RemoteApi):NetworkRepository = NetworkRepositoryImpl(api)
 
 }
