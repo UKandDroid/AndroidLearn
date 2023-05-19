@@ -5,9 +5,9 @@ import test.app.domain.model.ui.ScreenListItem
 sealed class UiStates{
     abstract val items: List<ScreenListItem>
 
-    class ListEvents( override val items: List<ScreenListItem>): UiStates()
+    data class ListEvents( override val items: List<ScreenListItem>): UiStates()
 
-    class EventsUpdate(message: String): UiStates(){
+    data class EventsUpdate(val message: String): UiStates(){
         override val items: List<ScreenListItem> = listOf(MessageItem(message))
     }
 }

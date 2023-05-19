@@ -25,7 +25,7 @@ class MainActivity : ComponentActivity() {
             ChatTheme {
                 val uiState by viewModel.uiState
 
-                Surface(color = MaterialTheme.colors.background,) {
+                Surface(color = MaterialTheme.colors.background) {
                     EventWindowComponent(
                         events = uiState.items,
                         onSearchClick = {

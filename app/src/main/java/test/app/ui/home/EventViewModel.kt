@@ -38,7 +38,7 @@ class EventViewModel @Inject constructor(
             }
 
            _uiState.value = if(success) {
-               UiStates.ListEvents( localRepository.getAllEvents().map { EventItem(it.name, it.desc, it.url) })
+               UiStates.ListEvents(localRepository.getAllEvents().map { EventItem(it.name, it.desc, it.url) })
             } else {
                UiStates.EventsUpdate("Failed to refresh, please try again")
             }
@@ -46,7 +46,7 @@ class EventViewModel @Inject constructor(
     }
 
     fun eventSearch(search: String) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             val searchResult = localRepository.getEvents(search)
 
             _uiState.value = if(searchResult.isNotEmpty()) {
