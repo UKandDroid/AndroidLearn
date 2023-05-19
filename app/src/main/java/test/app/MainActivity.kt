@@ -23,19 +23,15 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             ChatTheme {
-
                 val uiState by viewModel.uiState
 
-                Surface(
-                    color = MaterialTheme.colors.background,
-                ) {
+                Surface(color = MaterialTheme.colors.background,) {
                     EventWindowComponent(
                         scrollPos =0,
                         events = uiState.items,
                         onSearchClick = {
-                            viewModel.eventSearch(it)
-                        }
-                        )
+                            viewModel.searchEvents(it)
+                        })
                 }
             }
         }

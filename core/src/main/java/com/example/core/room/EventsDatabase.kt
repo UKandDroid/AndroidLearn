@@ -7,5 +7,5 @@ import com.example.core.message.EventEntity
 @Database(entities = [EventEntity::class], version = 1)
 abstract class EventsDatabase: RoomDatabase() {
 
-    abstract fun getMessageDao(): EventDao
+    abstract fun getMessageDao(): EventDatabase
 }

@@ -7,10 +7,13 @@ import com.example.core.message.EventEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface EventDao {
+interface EventDatabase {
 
     @Query("SELECT * FROM events")
-    fun getEvents(): Flow<List<EventEntity>>
+    fun getEvents(): List<EventEntity>
+
+    @Query("SELECT * FROM events WHERE name LIKE '%' ||:name ||'%'")
+    fun getEvents(name: String): List<EventEntity>
 
     @Query("DELETE FROM events")
     fun deleteAllRows();
