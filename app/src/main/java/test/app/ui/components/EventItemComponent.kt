@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.rememberAsyncImagePainter
 import  test.app.R
 
 @Composable
@@ -24,7 +25,7 @@ fun EventItemComponent(
         Row(
             modifier = Modifier.padding(8.dp)) {
             Image(
-                painter = painterResource(imageUrl),
+                painter =  rememberAsyncImagePainter(imageUrl),
                 contentDescription = null, // Provide a meaningful description here
                 modifier = Modifier.size(100.dp).padding(end = 16.dp))
 

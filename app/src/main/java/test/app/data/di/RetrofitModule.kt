@@ -17,7 +17,7 @@ object RetrofitModule {
     @Singleton
     @Provides
     @Named("ApiKey")
-    fun apiKey() = "DW0E98NrxUIfDDtNN7ijruVSm60ryFLX"
+    fun apiKey() = "DW0E98NrxUIfDDtNN7ijruVSm60ryFLX"  // TODO add to android keystore
 
     @Singleton
     @Provides

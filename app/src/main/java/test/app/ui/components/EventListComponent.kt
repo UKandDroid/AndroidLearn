@@ -40,10 +40,6 @@ fun EventListComponent(
                 }
             }
         }
-
-        item {
-            MessageItemComponent("This is the start of your chat!")
-        }
     }
 
 }

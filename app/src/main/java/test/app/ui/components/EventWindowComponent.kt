@@ -9,8 +9,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import test.app.domain.model.ui.ScreenListItem
 import test.app.domain.model.ui.EventItem
+import test.app.ui.home.EventViewModel
 
 
 @SuppressLint("SuspiciousIndentation")
@@ -23,6 +27,9 @@ fun EventWindowComponent(
 
     val chatListState = rememberLazyListState()
     val scrollPosition = remember(scrollPos) { derivedStateOf {  scrollPos  } }
+    val viewModel = viewModel<EventViewModel>()
+    val isLoading by viewModel.isLoading
+    val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = isLoading)
 
         Column {
             SearchComponent(
@@ -30,16 +37,18 @@ fun EventWindowComponent(
                 onSearch = onSearchClick
                 )
 
-            EventListComponent(
-                modifier = Modifier
-                    .weight(1.0f)
-                    .fillMaxHeight()
-                    .background(Color.White),
-                eventList = events,
-                listState = chatListState
-            )
-
-
+            SwipeRefresh(
+                state = swipeRefreshState,
+                onRefresh = viewModel::refreshEvents){
+                EventListComponent(
+                    modifier = Modifier
+                        .weight(1.0f)
+                        .fillMaxHeight()
+                        .background(Color.White),
+                    eventList = events,
+                    listState = chatListState
+                )
+            }
     }
 
 
