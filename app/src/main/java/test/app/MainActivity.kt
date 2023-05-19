@@ -30,7 +30,7 @@ class MainActivity : ComponentActivity() {
                         scrollPos =0,
                         events = uiState.items,
                         onSearchClick = {
-                            viewModel.searchEvents(it)
+                            viewModel.eventSearch(it)
                         })
                 }
             }

@@ -16,7 +16,7 @@ import test.app.ui.theme.ForestFrost
 
 @Composable
 fun MessageItemComponent(title: String) {
-    Column(modifier = Modifier
+    Column(modifier = Modifier.padding(top = 20.dp)
         .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

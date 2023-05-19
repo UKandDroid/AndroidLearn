@@ -1,9 +1,12 @@
 package test.app.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Card
@@ -13,7 +16,10 @@ import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import test.app.ui.theme.ForestFrost
@@ -26,6 +32,8 @@ fun SearchComponent(
 
 ) {
     var searchText by remember { mutableStateOf("") }
+    val focusRequester = remember { FocusRequester() }
+    val focusManager = LocalFocusManager.current
 
     Card(elevation = 20.dp, backgroundColor = ForestFrost) {
         Row(
@@ -39,10 +47,17 @@ fun SearchComponent(
                     value = searchText,
                     onValueChange = { searchText = it },
                     placeholder = {Text("Search  ")},
-                    modifier = Modifier.weight(0.75f).padding(10.dp),
+                    modifier = Modifier.weight(0.75f).padding(10.dp).height(IntrinsicSize.Min).focusRequester(focusRequester),
+                    keyboardOptions = KeyboardOptions(),
                     colors = TextFieldDefaults.textFieldColors(textColor = Color.Black, placeholderColor = Color.Gray))
 
-                SearchButton(modifier = Modifier.padding(bottom = 10.dp),text = "Search") { onSearch(searchText) }
+                SearchButton(
+                    modifier = Modifier.padding(bottom = 10.dp),
+                    text = "Search", onClick =  {
+                        focusManager.clearFocus()
+                        focusRequester.freeFocus()
+                        onSearch(searchText)
+                })
             }
         }
     }

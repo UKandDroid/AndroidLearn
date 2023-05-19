@@ -45,7 +45,7 @@ class EventViewModel @Inject constructor(
         }
     }
 
-    fun searchEvents(search: String) {
+    fun eventSearch(search: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val searchResult = localRepository.getEvents(search)
 

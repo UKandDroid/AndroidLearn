@@ -26,7 +26,7 @@ fun EventItemComponent(
             modifier = Modifier.padding(8.dp)) {
             Image(
                 painter =  rememberAsyncImagePainter(imageUrl),
-                contentDescription = null, // Provide a meaningful description here
+                contentDescription = null,
                 modifier = Modifier.size(100.dp).padding(end = 16.dp))
 
             Column {
@@ -48,8 +48,8 @@ fun EventItemComponent(
 @Composable
 fun PreviewImageWithTextCard() {
     EventItemComponent(
-        name = "Disco somewhere or anyw",
-        desc = "Artist inclued",
+        name = "Disco somewhere or anywhere",
+        desc = "Artist included",
         imageUrl = "https://somewhere.drawable.ic_launcher_foreground"
     )
 }
