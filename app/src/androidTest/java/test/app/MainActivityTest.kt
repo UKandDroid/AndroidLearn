@@ -22,14 +22,7 @@ class MainActivityTest {
 
    // private val localRepository = mockk<LocalRepository>()
 
-    @get:Rule
-    var activityInjectorRule = ActivityInjectionRule(
-        Injector(
-            MainActivity::class
-        ){
-            viewModel = testViewModel
-        }
-    )
+
 
     @Test
     fun network_error_is_displayed() {
@@ -86,15 +79,8 @@ class MainActivityTest {
 
     private var testViewModel: EventViewModel = EventViewModel(object :LocalRepository{
         override suspend fun getAllEvents(): List<EventEntity> { return  emptyList<EventEntity>() }
-
         override suspend fun getEvents(name: String): List<EventEntity> { TODO("Not yet implemented") }
-
-        override suspend fun saveEvents(events: List<Event>) {
-            TODO("Not yet implemented")
-        }
-
-        override suspend fun refreshEvents(): Boolean {
-            return true
-        }
+        override suspend fun saveEvents(events: List<Event>) { TODO("Not yet implemented") }
+        override suspend fun refreshEvents(): Boolean { return true }
     })
 }

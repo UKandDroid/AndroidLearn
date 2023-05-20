@@ -16,7 +16,7 @@ import test.app.ui.theme.ChatTheme
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-     lateinit var viewModel: EventViewModel// by viewModels()
+    val viewModel: EventViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
