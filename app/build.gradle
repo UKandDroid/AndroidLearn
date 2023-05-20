@@ -7,16 +7,17 @@ plugins {
 
 android {
     namespace 'test.app'
-    compileSdk 33
+    compileSdk rootProject.ext.compile_sdk
 
     defaultConfig {
         applicationId "test.chat"
-        minSdk 25
-        targetSdk 33
+        minSdk rootProject.ext.min_sdk
+        targetSdk rootProject.ext.target_sdk
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
         vectorDrawables {
             useSupportLibrary true
         }

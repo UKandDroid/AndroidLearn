@@ -7,11 +7,11 @@ plugins {
 
 android {
     namespace 'com.example.core'
-    compileSdk 33
+    compileSdk rootProject.ext.compile_sdk
 
     defaultConfig {
-        minSdk 24
-        targetSdk 33
+        minSdk rootProject.ext.min_sdk
+        targetSdk rootProject.ext.target_sdk
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"

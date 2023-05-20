@@ -5,11 +5,11 @@ plugins {
 
 android {
     namespace 'com.example.network'
-    compileSdk 33
+    compileSdk rootProject.ext.compile_sdk
 
     defaultConfig {
-        minSdk 24
-        targetSdk 33
+        minSdk rootProject.ext.min_sdk
+        targetSdk rootProject.ext.target_sdk
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -36,5 +36,5 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.okhttp3:okhttp:4.9.1'
-    
+
 }
