@@ -1,5 +1,7 @@
 package test.app.ui.home
 
+import android.content.res.Resources
+import android.provider.Settings.Global.getString
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -9,9 +11,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import test.app.R
 import test.app.domain.model.ui.EventItem
 import test.app.domain.repo.LocalRepository
 import test.app.domain.repo.LocalRepositoryImpl
+import test.app.domain.util.FAILED_TO_REFRESH
+import test.app.domain.util.NO_MATCHING_ITEM
 import javax.inject.Inject
 
 @HiltViewModel
@@ -41,8 +46,9 @@ class EventViewModel @Inject constructor(
            _uiState.value = if(success) {
                UiStates.ListEvents(localRepository.getAllEvents().map { EventItem(it.name, it.desc, it.url) })
             } else {
-               UiStates.EventsUpdate("Failed to refresh, please try again")
+               UiStates.EventsUpdate(FAILED_TO_REFRESH)
             }
+
         }
     }
 
@@ -53,7 +59,7 @@ class EventViewModel @Inject constructor(
             _uiState.value = if(searchResult.isNotEmpty()) {
                 UiStates.ListEvents( searchResult.map { EventItem(it.name, it.desc, it.url) })
             } else {
-                UiStates.EventsUpdate("No matching items found")
+                UiStates.EventsUpdate(NO_MATCHING_ITEM)
             }
         }
     }

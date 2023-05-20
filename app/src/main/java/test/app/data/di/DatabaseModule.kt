@@ -2,7 +2,7 @@ package test.app.data.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.core.room.EventsDatabase
+import com.example.core.room.RoomDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,15 +17,15 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    fun provideMessageDatabase(@ApplicationContext appContext: Context): EventsDatabase {
+    fun provideMessageDatabase(@ApplicationContext appContext: Context): RoomDatabase {
         return Room.databaseBuilder(
             context = appContext,
-            klass = EventsDatabase::class.java,
+            klass = RoomDatabase::class.java,
             name = "messages_db"
         ).build()
     }
 
     @Provides
     @Singleton
-    fun provideMessageDao(db: EventsDatabase) = db.getMessageDao()
+    fun provideMessageDao(db: RoomDatabase) = db.getMessageDao()
 }

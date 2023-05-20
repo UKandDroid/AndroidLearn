@@ -1,7 +1,7 @@
 package test.app.domain.repo
 
-import com.example.core.Event
-import com.example.core.message.EventEntity
+import com.example.network.model.Event
+import com.example.core.entity.EventEntity
 
 interface LocalRepository {
 

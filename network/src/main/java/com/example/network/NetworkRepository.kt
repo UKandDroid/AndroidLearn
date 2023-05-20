@@ -1,6 +1,6 @@
 package com.example.network
 
-import com.example.core.ListEvents
+import com.example.network.model.ListEvents
 
 
 /**

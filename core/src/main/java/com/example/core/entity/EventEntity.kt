@@ -1,4 +1,4 @@
-package com.example.core.message
+package com.example.core.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

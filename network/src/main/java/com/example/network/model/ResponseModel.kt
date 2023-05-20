@@ -1,6 +1,4 @@
-package com.example.core
-
-
+package com.example.network.model
 
 data class EventResponse(val _embedded: ListEvents)
 data class ListEvents(val events: List<Event>)

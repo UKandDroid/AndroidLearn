@@ -1,7 +1,6 @@
 package com.example.network
 
-import com.example.core.EventResponse
-import com.example.core.ListEvents
+import com.example.network.model.EventResponse
 import retrofit2.Response
 import retrofit2.http.GET
 

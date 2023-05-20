@@ -3,8 +3,7 @@ package com.example.core.room
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.example.core.message.EventEntity
-import kotlinx.coroutines.flow.Flow
+import com.example.core.entity.EventEntity
 
 @Dao
 interface EventDatabase {

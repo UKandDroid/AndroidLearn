@@ -1,7 +1,7 @@
 package test.app
 
 import androidx.compose.runtime.State
-import com.example.core.message.EventEntity
+import com.example.core.entity.EventEntity
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers

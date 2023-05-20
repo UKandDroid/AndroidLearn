@@ -1,9 +1,9 @@
 package test.app.domain.repo
 
-import com.example.core.Event
-import com.example.core.Image
-import com.example.core.message.EventEntity
-import com.example.core.message.EventModel
+import com.example.network.model.Event
+import com.example.network.model.Image
+import com.example.core.entity.EventEntity
+import com.example.core.entity.EventModel
 import com.example.core.room.EventDatabase
 import com.example.network.NetworkRepository
 import com.example.network.ResponseWrapper

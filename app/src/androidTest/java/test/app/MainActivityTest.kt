@@ -7,6 +7,8 @@ import org.junit.Rule
 import org.junit.Test
 import test.app.domain.model.ui.EventItem
 import test.app.domain.model.ui.MessageItem
+import test.app.domain.util.FAILED_TO_REFRESH
+import test.app.domain.util.NO_MATCHING_ITEM
 import test.app.ui.components.EventWindowComponent
 
 
@@ -18,28 +20,28 @@ class MainActivityTest {
     @Test
     fun network_error_is_displayed() {
         val events = listOf(
-            MessageItem("Failed to refresh, please try again"),
-        )
-
-        composeTestRule.setContent {
-            EventWindowComponent(isLoading = false, events = events, {}, {} )
-        }
-
-        composeTestRule.onNodeWithText("Failed to refresh, please try again").assertIsDisplayed()
-    }
-
-
-    @Test
-    fun no_search_result_is_displayed() {
-        val events = listOf(
-            MessageItem("No matching items found"),
+            MessageItem(FAILED_TO_REFRESH),
         )
 
         composeTestRule.setContent {
             EventWindowComponent(isLoading = false, events = events, {}, {})
         }
 
-        composeTestRule.onNodeWithText("No matching items found").assertIsDisplayed()
+        composeTestRule.onNodeWithText(FAILED_TO_REFRESH).assertIsDisplayed()
+    }
+
+
+    @Test
+    fun no_search_result_is_displayed() {
+        val events = listOf(
+            MessageItem(NO_MATCHING_ITEM),
+        )
+
+        composeTestRule.setContent {
+            EventWindowComponent(isLoading = false, events = events, {}, {})
+        }
+
+        composeTestRule.onNodeWithText(NO_MATCHING_ITEM).assertIsDisplayed()
     }
 
     @Test
@@ -58,7 +60,7 @@ class MainActivityTest {
         )
 
         composeTestRule.setContent {
-            EventWindowComponent(isLoading = false, events = events, {}, { } )
+            EventWindowComponent(isLoading = false, events = events, {}, {})
         }
 
         composeTestRule.onNodeWithText("Disco somewhere or anywhere").assertIsDisplayed()

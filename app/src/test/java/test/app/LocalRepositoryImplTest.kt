@@ -1,9 +1,9 @@
 package test.app
 
-import com.example.core.Image
-import com.example.core.ListEvents
-import com.example.core.message.EventEntity
-import com.example.core.message.EventModel
+import com.example.network.model.Image
+import com.example.network.model.ListEvents
+import com.example.core.entity.EventEntity
+import com.example.core.entity.EventModel
 import com.example.core.room.EventDatabase
 import com.example.network.NetworkRepository
 import com.example.network.ResponseWrapper
@@ -71,8 +71,5 @@ class LocalRepositoryImplTest {
 
         assertEquals(false, result)
     }
-
-
-    private fun  List<Image>.firstOrEmpty() = if (isNotEmpty()) first().url else ""
 
 }
