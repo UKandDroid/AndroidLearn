@@ -23,14 +23,13 @@ import test.app.ui.home.EventViewModel
 @SuppressLint("SuspiciousIndentation")
 @Composable
 fun EventWindowComponent(
+    isLoading: Boolean,
     events: List<ScreenListItem>,
     onSearchClick: (String) -> Unit,
-    viewModel: EventViewModel
+    onRefresh: () -> Unit,
 ) {
 
     val chatListState = rememberLazyListState()
-   // val viewModel = viewModel<EventViewModel>()
-    val isLoading by viewModel.isLoading
     val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = isLoading)
 
         Column {
@@ -41,7 +40,7 @@ fun EventWindowComponent(
 
             SwipeRefresh(
                 state = swipeRefreshState,
-                onRefresh = viewModel::refreshEvents){
+                onRefresh = onRefresh){
                 EventListComponent(
                     modifier = Modifier
                         .weight(1.0f)
@@ -53,7 +52,6 @@ fun EventWindowComponent(
             }
     }
 
-
     LaunchedEffect(key1 = events.size) {
         chatListState.animateScrollToItem(0)
     }
@@ -64,27 +62,11 @@ fun EventWindowComponent(
 @Preview
 @Composable
 fun PreviewChat(){
-    EventWindowComponent( events = listOf(
+    EventWindowComponent( false, events = listOf(
         EventItem("Hi there", "true", "true"),
         EventItem("ohh hello", "false", "true"),
         EventItem("Sorry wrong number ", "true", "true"),
 
-        ) , {}, viewModel = EventViewModel(object :LocalRepository{
-        override suspend fun getAllEvents(): List<EventEntity> {
-            TODO("Not yet implemented")
-        }
-
-        override suspend fun getEvents(name: String): List<EventEntity> {
-            TODO("Not yet implemented")
-        }
-
-        override suspend fun saveEvents(events: List<Event>) {
-            TODO("Not yet implemented")
-        }
-
-        override suspend fun refreshEvents(): Boolean {
-            TODO("Not yet implemented")
-        }
-    })
+        ) , {},{}
     )
 }

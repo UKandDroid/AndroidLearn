@@ -3,26 +3,17 @@ package test.app
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
-import com.example.core.Event
-import com.example.core.message.EventEntity
-import io.mockk.mockk
 import org.junit.Rule
 import org.junit.Test
 import test.app.domain.model.ui.EventItem
 import test.app.domain.model.ui.MessageItem
-import test.app.domain.repo.LocalRepository
 import test.app.ui.components.EventWindowComponent
-import test.app.ui.home.EventViewModel
 
 
 class MainActivityTest {
 
     @get:Rule
     val composeTestRule = createComposeRule()
-
-   // private val localRepository = mockk<LocalRepository>()
-
-
 
     @Test
     fun network_error_is_displayed() {
@@ -31,7 +22,7 @@ class MainActivityTest {
         )
 
         composeTestRule.setContent {
-            EventWindowComponent(events = events, {}, testViewModel)
+            EventWindowComponent(isLoading = false, events = events, {}, {} )
         }
 
         composeTestRule.onNodeWithText("Failed to refresh, please try again").assertIsDisplayed()
@@ -45,7 +36,7 @@ class MainActivityTest {
         )
 
         composeTestRule.setContent {
-            EventWindowComponent(events = events, {}, testViewModel)
+            EventWindowComponent(isLoading = false, events = events, {}, {})
         }
 
         composeTestRule.onNodeWithText("No matching items found").assertIsDisplayed()
@@ -67,7 +58,7 @@ class MainActivityTest {
         )
 
         composeTestRule.setContent {
-            EventWindowComponent(events = events, {}, testViewModel)
+            EventWindowComponent(isLoading = false, events = events, {}, { } )
         }
 
         composeTestRule.onNodeWithText("Disco somewhere or anywhere").assertIsDisplayed()
@@ -77,10 +68,5 @@ class MainActivityTest {
         composeTestRule.onNodeWithText("Join us for a night of fun").assertIsDisplayed()
     }
 
-    private var testViewModel: EventViewModel = EventViewModel(object :LocalRepository{
-        override suspend fun getAllEvents(): List<EventEntity> { return  emptyList<EventEntity>() }
-        override suspend fun getEvents(name: String): List<EventEntity> { TODO("Not yet implemented") }
-        override suspend fun saveEvents(events: List<Event>) { TODO("Not yet implemented") }
-        override suspend fun refreshEvents(): Boolean { return true }
-    })
+
 }

@@ -16,8 +16,12 @@ The app logic covers edge cases of network request failure and no search results
 
 # Tests
 
-The app includes test for ViewModel and LocalRespositoryImpl
-UI tests could be done if given more time, but that was not the requirement
+Unit tests
+ - EventViewModel
+ - LocalRespositoryImpl
+
+Ui Tests
+-MainActivity
 
 
 # Modules

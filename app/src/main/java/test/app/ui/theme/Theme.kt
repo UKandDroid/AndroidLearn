@@ -12,7 +12,7 @@ private val DarkColorPalette = darkColors(
 )
 
 @Composable
-fun ChatTheme(
+fun TestAppTheme(
     content: @Composable () -> Unit
 ) {
 

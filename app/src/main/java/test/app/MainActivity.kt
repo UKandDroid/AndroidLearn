@@ -10,27 +10,32 @@ import androidx.compose.runtime.getValue
 import dagger.hilt.android.AndroidEntryPoint
 import test.app.ui.home.EventViewModel
 import test.app.ui.components.EventWindowComponent
-import test.app.ui.theme.ChatTheme
+import test.app.ui.theme.TestAppTheme
 
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    val viewModel: EventViewModel by viewModels()
+    private val viewModel: EventViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
-            ChatTheme {
+            TestAppTheme {
                 val uiState by viewModel.uiState
+                val isLoading by viewModel.isLoading
 
                 Surface(color = MaterialTheme.colors.background) {
                     EventWindowComponent(
+                        isLoading,
                         events = uiState.items,
                         onSearchClick = {
                             viewModel.eventSearch(it)
-                        }, viewModel = viewModel)
+                        },
+                        onRefresh = {
+                            viewModel.refreshEvents()
+                        } )
                 }
             }
         }
