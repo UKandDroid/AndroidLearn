@@ -11,6 +11,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import test.app.domain.model.ui.EventItem
 import test.app.domain.repo.LocalRepository
+import test.app.domain.repo.LocalRepositoryImpl
 import javax.inject.Inject
 
 @HiltViewModel

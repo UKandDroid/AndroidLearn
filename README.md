@@ -1,22 +1,22 @@
-# Chat Test App
+#  Test App
 
-This test app is technology demonstration, it uses some of common technologies that are used in app development. e.g
-
-Kotlin, Compose, Room, MVVM, Dagger, Hilt, Retrofit e.t.c
+The is a Test App for loading event data from TicketMaster Api and display as list.
+The event list is stored in room database and is searchable by name.
+The app features pull to refresh, that reloads the data from api
+The app logic covers edge cases of network request failure and no search results.
 
 # Architecture
 
-The app uses clean architecture.
-
-Room Repository for chat storage
-
-Chat convertor to convert raw chat messages to View 
-
-TODO: Retrofit to get chat data from API
+- The app uses Dagger/Hilt for DI
+- The app uses clean architecture.
+- Room Repository for events storage
+- Retrofit to get data from API
+- The UI is designed in compose
+- The api key is injected using retrofit interceptor
 
 # Tests
 
-The app includes test for ViewModel and ChatConvertor
+The app includes test for ViewModel and LocalRespositoryImpl
 UI tests could be done if given more time, but that was not the requirement
 
 
@@ -25,3 +25,7 @@ UI tests could be done if given more time, but that was not the requirement
  App - App UI logic
  Core - Business core
  Network - Networking logic
+
+
+# TODO
+Save api credentials in android credential manager

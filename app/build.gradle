@@ -22,6 +22,20 @@ android {
         }
     }
 
+    testOptions {
+        packagingOptions {
+            jniLibs {
+                useLegacyPackaging = true
+            }
+        }
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+            excludes += '/META-INF/*.*'
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -41,11 +55,7 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion '1.4.0'
     }
-    packagingOptions {
-        resources {
-            excludes += '/META-INF/{AL2.0,LGPL2.1}'
-        }
-    }
+
 }
 
 dependencies {
@@ -75,8 +85,9 @@ dependencies {
     kapt 'com.google.dagger:hilt-compiler:2.45'
 
     // di for instrumentation tests
-    androidTestImplementation  'com.google.dagger:hilt-android-testing:2.45'
-    kaptAndroidTest 'com.google.dagger:hilt-compiler:2.45'
+    androidTestImplementation 'com.google.dagger:dagger-android-support:2.45'
+    androidTestImplementation "io.mockk:mockk-android:1.12.3"
+
 
     // di for local unit tests
     testImplementation 'com.google.dagger:hilt-android-testing:2.45'
@@ -84,7 +95,7 @@ dependencies {
 
     // testing
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_ui_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_ui_version"

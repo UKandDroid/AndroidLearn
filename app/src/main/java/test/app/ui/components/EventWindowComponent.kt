@@ -10,10 +10,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.core.Event
+import com.example.core.message.EventEntity
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import test.app.domain.model.ui.ScreenListItem
 import test.app.domain.model.ui.EventItem
+import test.app.domain.repo.LocalRepository
 import test.app.ui.home.EventViewModel
 
 
@@ -21,11 +24,12 @@ import test.app.ui.home.EventViewModel
 @Composable
 fun EventWindowComponent(
     events: List<ScreenListItem>,
-    onSearchClick: (String) -> Unit
+    onSearchClick: (String) -> Unit,
+    viewModel: EventViewModel
 ) {
 
     val chatListState = rememberLazyListState()
-    val viewModel = viewModel<EventViewModel>()
+   // val viewModel = viewModel<EventViewModel>()
     val isLoading by viewModel.isLoading
     val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = isLoading)
 
@@ -65,5 +69,22 @@ fun PreviewChat(){
         EventItem("ohh hello", "false", "true"),
         EventItem("Sorry wrong number ", "true", "true"),
 
-        ) , {})
+        ) , {}, viewModel = EventViewModel(object :LocalRepository{
+        override suspend fun getAllEvents(): List<EventEntity> {
+            TODO("Not yet implemented")
+        }
+
+        override suspend fun getEvents(name: String): List<EventEntity> {
+            TODO("Not yet implemented")
+        }
+
+        override suspend fun saveEvents(events: List<Event>) {
+            TODO("Not yet implemented")
+        }
+
+        override suspend fun refreshEvents(): Boolean {
+            TODO("Not yet implemented")
+        }
+    })
+    )
 }

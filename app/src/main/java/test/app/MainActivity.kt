@@ -16,7 +16,7 @@ import test.app.ui.theme.ChatTheme
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private val viewModel: EventViewModel by viewModels()
+     lateinit var viewModel: EventViewModel// by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +30,7 @@ class MainActivity : ComponentActivity() {
                         events = uiState.items,
                         onSearchClick = {
                             viewModel.eventSearch(it)
-                        })
+                        }, viewModel = viewModel)
                 }
             }
         }
