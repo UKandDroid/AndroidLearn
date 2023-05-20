@@ -2,23 +2,23 @@
 
 The is a Test App for loading event data from TicketMaster Api and display as list.
 The event list is stored in room database and is searchable by name.
-The app features pull to refresh, that reloads the data from api
-The app logic covers edge cases of network request failure and no search results.
+The app features pull to refresh, that reloads the data from api.
+The app logic covers edge cases for network request failure and no search results.
 
-# Architecture
+# Features
 
 - The app uses Dagger/Hilt for DI
 - The app uses clean architecture.
-- Room Repository for events storage
-- Retrofit to get data from API
-- The UI is designed in compose
+- Room Repository for local storage
+- Retrofit for api calls
+- The UI in compose
 - The api key is injected using retrofit interceptor
 
 # Tests
 
 Unit tests
  - EventViewModel
- - LocalRespositoryImpl
+ - LocalRepositoryImpl
 
 Ui Tests
 -MainActivity
@@ -27,7 +27,7 @@ Ui Tests
 # Modules
 
  App - App UI logic
- Core - Business core
+ Core - Business logic
  Network - Networking logic
 
 

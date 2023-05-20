@@ -1,6 +1,5 @@
 package test.app
 
-import com.example.network.model.Image
 import com.example.network.model.ListEvents
 import com.example.core.entity.EventEntity
 import com.example.core.entity.EventModel
