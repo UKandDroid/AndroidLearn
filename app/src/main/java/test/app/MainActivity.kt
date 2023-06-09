@@ -9,7 +9,6 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dagger.hilt.android.AndroidEntryPoint
-import test.app.ui.home.ChatViewModel
 import test.app.ui.components.ChatWindowComponent
 import test.app.ui.theme.ChatTheme
 

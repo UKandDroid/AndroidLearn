@@ -52,10 +52,11 @@ fun SwitchUserComponent(
     Card(elevation = 20.dp, backgroundColor = ForestFrost) {
         Row(
             modifier = modifier,
-            horizontalArrangement = Arrangement.SpaceEvenly
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically
         ) {
 
-            Row(modifier = Modifier.weight(1f).fillMaxWidth(),verticalAlignment = Alignment.CenterVertically) {
+            Row(modifier = Modifier.weight(1f).fillMaxWidth()) {
                 BasicTextField(searchText,
                     onValueChange = { searchText = it; onSearch(it)},
                     textStyle = TextStyle(

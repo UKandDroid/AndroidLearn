@@ -9,13 +9,15 @@ import javax.inject.Inject
 
 class ChatSearcher @Inject constructor() {
 
-  suspend fun search(list : List<ChatItem>, searchText: String) : Flow<List<ChatItem>> {
-      list.map {
-          if(it is MessageItem) {
-              it.highlight = it.text == searchText
-         }
-      }
+    suspend fun search(list: List<ChatItem>, searchText: String): Flow<List<ChatItem>> {
+        list.map {
+            if (it is MessageItem) {
+                it.highlight = if (searchText.isNotEmpty())
+                    it.text.trim().startsWith(searchText)
+                else false
+            }
+        }
 
-    return flowOf( list)
- }
+        return flowOf(list)
+    }
 }

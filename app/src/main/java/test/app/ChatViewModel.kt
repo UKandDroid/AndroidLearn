@@ -1,4 +1,4 @@
-package test.app.ui.home
+package test.app
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -21,6 +21,7 @@ import test.app.domain.util.ChatConvertor
 import test.app.domain.util.ChatSearcher
 import test.app.domain.util.DEFAULT_USER
 import test.app.domain.util.REMOTE_USER
+import test.app.ui.home.ChatUiState
 import javax.inject.Inject
 
 @HiltViewModel
@@ -57,6 +58,7 @@ class ChatViewModel @Inject constructor(
     fun userSearch(text: String) {
         viewModelScope.launch(Dispatchers.IO) {
             searchFlow.emit(searchChat.search(uiState.value.chatItems, text).first())
+
         }
     }
 

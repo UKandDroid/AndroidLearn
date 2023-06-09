@@ -10,7 +10,6 @@ import test.app.domain.model.ui.MessageItem
 import test.app.domain.model.ui.User
 import test.app.domain.repo.LocalRepository
 import test.app.ui.home.ChatUiState
-import test.app.ui.home.ChatViewModel
 import test.app.domain.util.ChatConvertor
 import org.junit.After
 import org.junit.Before
