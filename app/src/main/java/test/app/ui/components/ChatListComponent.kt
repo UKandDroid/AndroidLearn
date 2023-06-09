@@ -7,7 +7,9 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import test.app.R
 import test.app.domain.model.ui.ChatItem
 import test.app.domain.model.ui.MessageItem
 import test.app.domain.model.ui.SectionItem
@@ -44,7 +46,7 @@ fun ChatListComponent(
         }
 
         item {
-            SectionItemComponent("This is the start of your chat!")
+            SectionItemComponent(stringResource(id = R.string.this_is_the_start))
         }
     }
 

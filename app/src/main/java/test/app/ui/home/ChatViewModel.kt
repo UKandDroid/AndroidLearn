@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import test.app.data.StringRes
 import test.app.domain.model.ui.ChatItem
 import test.app.domain.model.ui.MessageItem
 import test.app.domain.model.ui.SectionItem
@@ -26,16 +27,22 @@ import javax.inject.Inject
 class ChatViewModel @Inject constructor(
     private val localRepository: LocalRepository,
     private val chatConvertor: ChatConvertor,
-    private val searchChat: ChatSearcher
+    private val searchChat: ChatSearcher,
+    private val strRes: StringRes
 ) : ViewModel() {
 
     private var _user = DEFAULT_USER
 
     private val searchFlow: MutableSharedFlow<List<ChatItem>> = MutableSharedFlow()
 
-    val uiState: StateFlow<ChatUiState> = merge( searchFlow, chatConvertor.convertChat())
-        .map { items -> ChatUiState(chatItems = items, scrollTo = getItemPositionInList(items))
-        }.stateIn(viewModelScope, SharingStarted.Eagerly, ChatUiState(0, listOf(SectionItem("Loading ..."))))
+    val uiState: StateFlow<ChatUiState> = merge(searchFlow, chatConvertor.convertChat())
+        .map { items ->
+            ChatUiState(chatItems = items, scrollTo = getItemPositionInList(items))
+        }.stateIn(
+            viewModelScope,
+            SharingStarted.Eagerly,
+            ChatUiState(0, listOf(SectionItem(strRes.LOADING)))
+        )
 
     fun sendMessage(text: String) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -47,14 +54,15 @@ class ChatViewModel @Inject constructor(
         _user = if (toggleOn) REMOTE_USER else DEFAULT_USER
     }
 
-    fun userSearch(text: String){
+    fun userSearch(text: String) {
         viewModelScope.launch(Dispatchers.IO) {
             searchFlow.emit(searchChat.search(uiState.value.chatItems, text).first())
         }
     }
 
-   private fun getItemPositionInList(items: List<ChatItem>) : Int{
+    private fun getItemPositionInList(items: List<ChatItem>): Int {
         val found = items.indexOfFirst { it is MessageItem && it.highlight }
-        return if(found != -1 && items.size > 2) (items.size - found - 2) else 0
+        val indexFound = if (found == -1) 0 else (items.size - found - 2)  // Push items up a bit so they are easy to view
+        return if (indexFound < 0) 0 else indexFound
     }
 }
