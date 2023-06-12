@@ -1,8 +1,8 @@
 
-The is a Test App for loading event data from dummy Api and display as list.
-The event list is stored in room database and is searchable by artist name.
+The is a Test App for loading Photo data from dummy Api and display as list.
+The Photo list is stored in room database and is searchable by title.
 The app features pull to refresh, that reloads the data from remote api.
-The app logic covers edge cases for network request failure and no search results.
+The app logic covers edge cases for network request failure and no search results,
 and loads local data from cache on request failure.
 
 # TechStack
@@ -15,7 +15,7 @@ and loads local data from cache on request failure.
 
 # Tests
 Unit tests
- - EventViewModel
+ - ActivityViewModel
  - LocalRepositoryImpl
 
 Ui Tests

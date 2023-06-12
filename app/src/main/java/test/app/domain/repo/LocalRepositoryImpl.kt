@@ -16,13 +16,13 @@ class LocalRepositoryImpl @Inject constructor(
     private val networkRepository: NetworkRepository)
     : LocalRepository {
 
-    override suspend fun getAllEvents(): List<EventModel>  =
+    override suspend fun getAllPhotos(): List<EventModel>  =
         withContext(Dispatchers.IO){ eventsDb.getEvents() }
 
-    override suspend fun getEvents(name: String): List<PhotoEntity> =
-        withContext(Dispatchers.IO){ eventsDb.getEvents(name) }
+    override suspend fun getPhotoByTitle(title: String): List<PhotoEntity> =
+        withContext(Dispatchers.IO){ eventsDb.getEvents(title) }
 
-    override suspend fun refreshEvents(): Boolean {
+    override suspend fun refreshPhotos(): Boolean {
         val result = networkRepository.getAllPhotos()
 
         return when(result){
@@ -30,14 +30,14 @@ class LocalRepositoryImpl @Inject constructor(
             is ResponseWrapper.ApiSuccess -> {
                 withContext(Dispatchers.IO){
                     eventsDb.deleteAllRows()
-                    saveEvents(result.data.events)
+                    savePhoto(result.data.events)
                 }
                 true
             }
         }
     }
 
-    override suspend fun saveEvents(listPhotos: List<Photo>) {
+    override suspend fun savePhoto(listPhotos: List<Photo>) {
         eventsDb.putEvent(
             listPhotos.map { PhotoEntity(name = it.title, desc = it.description, url = it.url) })
         }

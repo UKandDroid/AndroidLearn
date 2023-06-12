@@ -45,7 +45,7 @@ class LocalRepositoryImplTest {
         val expectedEvents = listOf(EventModel(0,"Queen of me", "Tour", "some_url"))
         every{mockEventsDb.getEvents()} returns expectedEvents
 
-        val result = localRepository.getAllEvents()
+        val result = localRepository.getAllPhotos()
 
         assertEquals(expectedEvents, result)
     }
@@ -56,7 +56,7 @@ class LocalRepositoryImplTest {
         val expectedEvents = listOf(PhotoEntity(0,"Queen of me", "Tour", "some_url"))
        every{ mockEventsDb.getEvents(name)} returns expectedEvents
 
-        val result = localRepository.getEvents(name)
+        val result = localRepository.getPhotoByTitle(name)
 
         assertEquals(expectedEvents, result)
     }
@@ -66,7 +66,7 @@ class LocalRepositoryImplTest {
         val mockResponse = ResponseWrapper.ApiError<ListPhotos>(-1, "Error")
         coEvery { mockNetworkRepository.getAllPhotos()} returns mockResponse
 
-        val result = localRepository.refreshEvents()
+        val result = localRepository.refreshPhotos()
 
         assertEquals(false, result)
     }

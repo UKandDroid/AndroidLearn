@@ -5,7 +5,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import org.junit.Rule
 import org.junit.Test
-import test.app.domain.model.ui.EventItem
+import test.app.domain.model.ui.PhotoItem
 import test.app.domain.model.ui.InfoItem
 import test.app.domain.util.FAILED_TO_REFRESH
 import test.app.domain.util.NO_MATCHING_ITEM
@@ -47,12 +47,12 @@ class MainActivityTest {
     @Test
     fun list_of_events_is_displayed() {
         val events = listOf(
-            EventItem(
+            PhotoItem(
                 "Disco somewhere or anywhere",
                 "Artist included",
                 "https://somewhere.drawable.ic_launcher_foreground"
             ),
-            EventItem(
+            PhotoItem(
                 "Party at Moon",
                 "Join us for a night of fun",
                 "https://party.xyz/ic_launcher_foreground"

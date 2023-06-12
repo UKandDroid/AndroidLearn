@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import test.app.domain.model.ui.EventItem
+import test.app.domain.model.ui.PhotoItem
 import test.app.domain.model.ui.InfoItem
 import test.app.domain.model.ui.ScreenListItem
 import test.app.domain.repo.LocalRepository
@@ -16,7 +16,7 @@ import test.app.domain.util.StringRes
 import javax.inject.Inject
 
 @HiltViewModel
-class EventViewModel @Inject constructor(
+class ActivityViewModel @Inject constructor(
     private val localRepository: LocalRepository,
     private val strRes: StringRes
 ) : ViewModel() {
@@ -33,14 +33,14 @@ class EventViewModel @Inject constructor(
     fun refreshEvents() {
         viewModelScope.launch {
             _isLoading.value = true
-            val success = localRepository.refreshEvents()
+            val success = localRepository.refreshPhotos()
 
             launch {
                 delay(500)                         // keep spinner for half a second, so it does not look like a glitch
                 _isLoading.value = false
             }
 
-            val listEvents: List<ScreenListItem> =  localRepository.getAllEvents().map { EventItem(it.name, it.desc, it.url) }
+            val listEvents: List<ScreenListItem> =  localRepository.getAllPhotos().map { PhotoItem(it.name, it.desc, it.url) }
             _uiState.value = UiStates.ListEvents(if(success) listEvents else listEvents + InfoItem(strRes.FAILED_TO_REFRESH))
 
         }
@@ -48,10 +48,10 @@ class EventViewModel @Inject constructor(
 
     fun eventSearch(search: String) {
         viewModelScope.launch {
-            val searchResult = localRepository.getEvents(search)
+            val searchResult = localRepository.getPhotoByTitle(search)
 
             _uiState.value = if(searchResult.isNotEmpty()) {
-                UiStates.ListEvents(searchResult.map { EventItem(it.name, it.desc, it.url) })
+                UiStates.ListEvents(searchResult.map { PhotoItem(it.name, it.desc, it.url) })
             } else {
                 UiStates.EventsUpdate(strRes.NO_MATCHING_ITEM)
             }

@@ -11,7 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import test.app.domain.model.ui.ScreenListItem
-import test.app.domain.model.ui.EventItem
+import test.app.domain.model.ui.PhotoItem
 
 
 @SuppressLint("SuspiciousIndentation")
@@ -54,9 +54,9 @@ fun EventWindowComponent(
 @Composable
 fun PreviewChat(){
     EventWindowComponent( false, listPhotos = listOf(
-        EventItem("Hi there", "true", "true"),
-        EventItem("ohh hello", "false", "true"),
-        EventItem("Sorry wrong number ", "true", "true"),
+        PhotoItem("Hi there", "true", "true"),
+        PhotoItem("ohh hello", "false", "true"),
+        PhotoItem("Sorry wrong number ", "true", "true"),
 
         ) , {},{}
     )

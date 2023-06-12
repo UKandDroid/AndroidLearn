@@ -3,6 +3,7 @@ package test.app
 import androidx.compose.runtime.State
 import com.example.core.entity.PhotoEntity
 import io.mockk.coEvery
+import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -14,9 +15,10 @@ import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import test.app.domain.model.ui.EventItem
+import test.app.domain.model.ui.PhotoItem
 import test.app.domain.repo.LocalRepository
-import test.app.ui.home.EventViewModel
+import test.app.domain.util.StringRes
+import test.app.ui.home.ActivityViewModel
 import test.app.ui.home.UiStates
 
 
@@ -24,13 +26,19 @@ import test.app.ui.home.UiStates
 class EventViewModelTest {
 
     private val mockLocalRepository = mockk<LocalRepository>()
-    private lateinit var testSubject: EventViewModel
+    private  val stringRes = mockk<StringRes>()
+    private lateinit var testSubject: ActivityViewModel
     private val testDispatcher = StandardTestDispatcher()
 
     @Before
     fun setup() {
+        every { stringRes.LOADING } returns "Loading..."
+        every { stringRes.FAILED_TO_REFRESH } returns "Failed to refresh, please try again"
+        every { stringRes.NO_MATCHING_ITEM } returns "No matching items found"
+
         Dispatchers.setMain(testDispatcher)
-        testSubject = EventViewModel(mockLocalRepository)
+        testSubject = ActivityViewModel(mockLocalRepository, stringRes)
+
     }
 
     @After
@@ -41,19 +49,20 @@ class EventViewModelTest {
     @Test
     fun `refreshEvents should update uiState with list of events when successful`() = runTest {
 
-        coEvery { mockLocalRepository.refreshEvents() } returns  true
-        coEvery { mockLocalRepository.getAllEvents() } returns  mockEventList
+        coEvery { mockLocalRepository.refreshPhotos() } returns  true
+        coEvery { mockLocalRepository.getAllPhotos() } returns  mockEventList
 
         testSubject.refreshEvents()
         testDispatcher.scheduler.advanceUntilIdle()
 
-        assertEquals(UiStates.ListEvents(mockEventList.map { EventItem(it.name, it.desc, it.url) }), testSubject.uiState.value)
+        assertEquals(UiStates.ListEvents(mockEventList.map { PhotoItem(it.name, it.desc, it.url) }), testSubject.uiState.value)
     }
 
     @Test
     fun `refreshEvents should update uiState with error message when unsuccessful`() = runTest {
 
-        coEvery { mockLocalRepository.refreshEvents() } returns  false
+        coEvery { mockLocalRepository.refreshPhotos() } returns  false
+        coEvery { mockLocalRepository.getAllPhotos() } returns  emptyList<PhotoEntity>()
 
         testSubject.refreshEvents()
         testDispatcher.scheduler.advanceUntilIdle()
@@ -64,22 +73,22 @@ class EventViewModelTest {
     @Test
     fun `eventSearch should update uiState with list of events when search result is not empty`() = runTest {
 
-        coEvery { mockLocalRepository.refreshEvents() } returns  true
-        coEvery { mockLocalRepository.getAllEvents() } returns  mockEventList
-        coEvery { mockLocalRepository.getEvents("search") } returns  mockEventList
+        coEvery { mockLocalRepository.refreshPhotos() } returns  true
+        coEvery { mockLocalRepository.getAllPhotos() } returns  mockEventList
+        coEvery { mockLocalRepository.getPhotoByTitle("search") } returns  mockEventList
 
         testSubject.eventSearch("search")
         testDispatcher.scheduler.advanceUntilIdle()
 
-        assertEquals(UiStates.ListEvents(mockEventList.map { EventItem(it.name, it.desc, it.url) }), testSubject.uiState.value)
+        assertEquals(UiStates.ListEvents(mockEventList.map { PhotoItem(it.name, it.desc, it.url) }), testSubject.uiState.value)
     }
 
     @Test
     fun `eventSearch should update uiState with no matching items message when search result is empty`() = runTest {
 
-        coEvery { mockLocalRepository.refreshEvents() } returns  true
-        coEvery { mockLocalRepository.getAllEvents() } returns  emptyList<PhotoEntity>()
-        coEvery { mockLocalRepository.getEvents("search") } returns  emptyList<PhotoEntity>()
+        coEvery { mockLocalRepository.refreshPhotos() } returns  true
+        coEvery { mockLocalRepository.getAllPhotos() } returns  emptyList<PhotoEntity>()
+        coEvery { mockLocalRepository.getPhotoByTitle("search") } returns  emptyList<PhotoEntity>()
 
         testSubject.eventSearch("search")
         testDispatcher.scheduler.advanceUntilIdle()

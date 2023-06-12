@@ -15,7 +15,7 @@ import test.app.ui.compose.theme.TestAppTheme
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private val viewModel: EventViewModel by viewModels()
+    private val viewModel: ActivityViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

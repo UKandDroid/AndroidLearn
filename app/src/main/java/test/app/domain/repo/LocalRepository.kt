@@ -5,11 +5,11 @@ import com.example.core.entity.PhotoEntity
 
 interface LocalRepository {
 
-    suspend fun getAllEvents(): List<PhotoEntity>
+    suspend fun getAllPhotos(): List<PhotoEntity>
 
-    suspend fun getEvents(name: String): List<PhotoEntity>
+    suspend fun getPhotoByTitle(title: String): List<PhotoEntity>
 
-    suspend fun saveEvents(events: List<Photo>)
+    suspend fun savePhoto(events: List<Photo>)
 
-    suspend fun refreshEvents() : Boolean
+    suspend fun refreshPhotos() : Boolean
 }

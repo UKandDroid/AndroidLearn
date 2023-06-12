@@ -10,7 +10,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import test.app.domain.model.ui.EventItem
+import test.app.domain.model.ui.PhotoItem
 import test.app.domain.model.ui.InfoItem
 import test.app.domain.model.ui.ScreenListItem
 
@@ -32,7 +32,7 @@ fun EventListComponent(
 
         items(items = photoList) { event ->
             when (event) {
-                is EventItem -> {
+                is PhotoItem -> {
                     EventItemComponent(
                         name = event.name,
                         desc = event.desc,
