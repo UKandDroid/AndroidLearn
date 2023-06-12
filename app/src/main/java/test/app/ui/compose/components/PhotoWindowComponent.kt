@@ -3,7 +3,6 @@ package test.app.ui.compose.components
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -19,12 +18,12 @@ import test.app.domain.model.ui.EventItem
 @Composable
 fun EventWindowComponent(
     isLoading: Boolean,
-    events: List<ScreenListItem>,
+    listPhotos: List<ScreenListItem>,
     onSearchClick: (String) -> Unit,
     onRefresh: () -> Unit,
 ) {
 
-    val chatListState = rememberLazyListState()
+
     val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = isLoading)
 
         Column {
@@ -41,15 +40,12 @@ fun EventWindowComponent(
                         .weight(1.0f)
                         .fillMaxHeight()
                         .background(Color.White),
-                    eventList = events,
-                    listState = chatListState
+                    photoList = listPhotos
                 )
             }
     }
 
-    LaunchedEffect(key1 = events.size) {
-        chatListState.animateScrollToItem(0)
-    }
+
 
 }
 
@@ -57,7 +53,7 @@ fun EventWindowComponent(
 @Preview
 @Composable
 fun PreviewChat(){
-    EventWindowComponent( false, events = listOf(
+    EventWindowComponent( false, listPhotos = listOf(
         EventItem("Hi there", "true", "true"),
         EventItem("ohh hello", "false", "true"),
         EventItem("Sorry wrong number ", "true", "true"),

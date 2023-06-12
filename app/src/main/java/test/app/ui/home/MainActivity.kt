@@ -9,7 +9,6 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.getValue
 import dagger.hilt.android.AndroidEntryPoint
 import test.app.ui.compose.components.EventWindowComponent
-import test.app.ui.home.EventViewModel
 import test.app.ui.compose.theme.TestAppTheme
 
 
@@ -29,7 +28,7 @@ class MainActivity : ComponentActivity() {
                 Surface(color = MaterialTheme.colors.background) {
                     EventWindowComponent(
                         isLoading,
-                        events = uiState.items,
+                        listPhotos = uiState.items,
                         onSearchClick = {
                             viewModel.eventSearch(it)
                         },

@@ -9,7 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import test.app.domain.model.ui.EventItem
-import test.app.domain.model.ui.MessageItem
+import test.app.domain.model.ui.InfoItem
 import test.app.domain.model.ui.ScreenListItem
 import test.app.domain.repo.LocalRepository
 import test.app.domain.util.StringRes
@@ -41,7 +41,7 @@ class EventViewModel @Inject constructor(
             }
 
             val listEvents: List<ScreenListItem> =  localRepository.getAllEvents().map { EventItem(it.name, it.desc, it.url) }
-            _uiState.value = UiStates.ListEvents(if(success) listEvents else listEvents + MessageItem(strRes.FAILED_TO_REFRESH))
+            _uiState.value = UiStates.ListEvents(if(success) listEvents else listEvents + InfoItem(strRes.FAILED_TO_REFRESH))
 
         }
     }

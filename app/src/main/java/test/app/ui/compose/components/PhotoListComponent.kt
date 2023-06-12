@@ -1,23 +1,28 @@
 package test.app.ui.compose.components
 
-import androidx.compose.foundation.layout.*
-
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import test.app.domain.model.ui.ScreenListItem
 import test.app.domain.model.ui.EventItem
-import test.app.domain.model.ui.MessageItem
+import test.app.domain.model.ui.InfoItem
+import test.app.domain.model.ui.ScreenListItem
 
 @Composable
 fun EventListComponent(
     modifier: Modifier,
-    eventList: List<ScreenListItem>,
-    listState: LazyListState,
+    photoList: List<ScreenListItem>,
 ) {
+    val listState = rememberLazyListState()
+    val scrollToTop = remember(key1 = photoList.size) { mutableStateOf(photoList.size) }
+    LaunchedEffect(key1 = scrollToTop) { listState.scrollToItem(photoList.size) }
+
     LazyColumn(
         state = listState,
         modifier = modifier,
@@ -25,7 +30,7 @@ fun EventListComponent(
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
 
-        items(items = eventList) { event ->
+        items(items = photoList) { event ->
             when (event) {
                 is EventItem -> {
                     EventItemComponent(
@@ -35,11 +40,13 @@ fun EventListComponent(
                     )
                 }
 
-                is MessageItem -> {
+                is InfoItem -> {
                     MessageItemComponent(title = event.message)
                 }
             }
         }
     }
+
+
 
 }
