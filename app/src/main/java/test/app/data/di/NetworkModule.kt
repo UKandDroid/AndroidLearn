@@ -3,7 +3,7 @@ package test.app.data.di
 import com.example.network.NetworkRepository
 import com.example.network.NetworkRepositoryImpl
 import com.example.network.RemoteApi
-import com.example.network.Retrofit
+import com.example.network.RetrofitApiBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,14 +15,10 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-    @Singleton
-    @Provides
-    @Named("ApiKey")
-    fun apiKey() = "DW0E98NrxUIfDDtNN7ijruVSm60ryFLX"  // TODO add to android keystore
 
     @Singleton
     @Provides
-    fun provideApi( @Named("ApiKey") apikey: String) = Retrofit().provideApi(apikey)
+    fun provideApi() = RetrofitApiBuilder().provideApi()
 
     @Singleton
     @Provides

@@ -1,11 +1,11 @@
 package com.example.network
 
-import com.example.network.model.ListEvents
+import com.example.network.model.ListPhotos
 
 
 /**
  *Created by Ubaid Khaliq
  */
 interface NetworkRepository {
-    suspend fun getAllEvents(): ResponseWrapper<ListEvents>
+    suspend fun getAllPhotos(): ResponseWrapper<ListPhotos>
 }

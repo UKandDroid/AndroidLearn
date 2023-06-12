@@ -1,7 +1,7 @@
 package test.app
 
 import androidx.compose.runtime.State
-import com.example.core.entity.EventEntity
+import com.example.core.entity.PhotoEntity
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
@@ -78,8 +78,8 @@ class EventViewModelTest {
     fun `eventSearch should update uiState with no matching items message when search result is empty`() = runTest {
 
         coEvery { mockLocalRepository.refreshEvents() } returns  true
-        coEvery { mockLocalRepository.getAllEvents() } returns  emptyList<EventEntity>()
-        coEvery { mockLocalRepository.getEvents("search") } returns  emptyList<EventEntity>()
+        coEvery { mockLocalRepository.getAllEvents() } returns  emptyList<PhotoEntity>()
+        coEvery { mockLocalRepository.getEvents("search") } returns  emptyList<PhotoEntity>()
 
         testSubject.eventSearch("search")
         testDispatcher.scheduler.advanceUntilIdle()
@@ -89,7 +89,7 @@ class EventViewModelTest {
     }
 
     private val mockEventList = listOf(
-        EventEntity(0,"Queen of me 1", "en-us-1", "url_1"),
-        EventEntity(1,"Queen of me 2", "en-us-2", "url_2")
+        PhotoEntity(0,"Queen of me 1", "en-us-1", "url_1"),
+        PhotoEntity(1,"Queen of me 2", "en-us-2", "url_2")
     )
 }

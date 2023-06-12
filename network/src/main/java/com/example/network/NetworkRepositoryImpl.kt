@@ -1,6 +1,6 @@
 package com.example.network
 
-import com.example.network.model.ListEvents
+import com.example.network.model.ListPhotos
 import java.lang.Exception
 
 
@@ -11,12 +11,12 @@ import java.lang.Exception
 class NetworkRepositoryImpl constructor(val remoteApi: RemoteApi) : NetworkRepository {
     private val EXCEPTION: Int = -1
 
-    override suspend fun getAllEvents(): ResponseWrapper<ListEvents> {
+    override suspend fun getAllPhotos(): ResponseWrapper<ListPhotos> {
         return try {
-            val response = remoteApi.getEvents()
+            val response = remoteApi.getAllPhotos()
             val result = response.body()
             if (response.isSuccessful && result != null) {
-                ResponseWrapper.ApiSuccess(ListEvents(result._embedded.events))
+                ResponseWrapper.ApiSuccess(ListPhotos(result.photos))
             } else {
                 ResponseWrapper.ApiError(response.code(), response.message())
             }

@@ -1,8 +1,7 @@
 package test.app.domain.repo
 
-import com.example.network.model.Event
-import com.example.network.model.Image
-import com.example.core.entity.EventEntity
+import com.example.network.model.Photo
+import com.example.core.entity.PhotoEntity
 import com.example.core.entity.EventModel
 import com.example.core.room.EventDatabase
 import com.example.network.NetworkRepository
@@ -20,12 +19,11 @@ class LocalRepositoryImpl @Inject constructor(
     override suspend fun getAllEvents(): List<EventModel>  =
         withContext(Dispatchers.IO){ eventsDb.getEvents() }
 
-    override suspend fun getEvents(name: String): List<EventEntity> =
+    override suspend fun getEvents(name: String): List<PhotoEntity> =
         withContext(Dispatchers.IO){ eventsDb.getEvents(name) }
 
-
     override suspend fun refreshEvents(): Boolean {
-        val result = networkRepository.getAllEvents()
+        val result = networkRepository.getAllPhotos()
 
         return when(result){
             is ResponseWrapper.ApiError ->  false
@@ -39,12 +37,11 @@ class LocalRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun saveEvents(events: List<Event>) {
+    override suspend fun saveEvents(listPhotos: List<Photo>) {
         eventsDb.putEvent(
-            events.map { EventEntity(name = it.name, desc = it.locale, url = it.images.firstOrEmpty()) })
+            listPhotos.map { PhotoEntity(name = it.title, desc = it.description, url = it.url) })
         }
 
 }
 
-private fun  List<Image>.firstOrEmpty() = if (isNotEmpty()) first().url else ""
 

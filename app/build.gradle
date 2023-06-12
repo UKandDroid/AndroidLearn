@@ -10,7 +10,7 @@ android {
     compileSdk rootProject.ext.compile_sdk
 
     defaultConfig {
-        applicationId "test.chat"
+        applicationId "test.app.photos"
         minSdk rootProject.ext.min_sdk
         targetSdk rootProject.ext.target_sdk
         versionCode 1

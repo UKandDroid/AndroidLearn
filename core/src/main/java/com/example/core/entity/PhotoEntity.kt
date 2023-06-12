@@ -4,9 +4,9 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-typealias EventModel = EventEntity
+typealias EventModel = PhotoEntity
 @Entity(tableName = "events")
-data class EventEntity(
+data class PhotoEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "desc") val desc: String,

@@ -7,11 +7,10 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
-import  test.app.R
 
 @Composable
 fun EventItemComponent(
@@ -32,12 +31,16 @@ fun EventItemComponent(
             Column {
                 Text(
                     text = name,
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 1,
                     style = MaterialTheme.typography.h6,
                     modifier = Modifier.padding(bottom = 4.dp)
                 )
                 Text(
                     text = desc,
-                    style = MaterialTheme.typography.body1
+                    style = MaterialTheme.typography.body1,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
                 )
             }
         }

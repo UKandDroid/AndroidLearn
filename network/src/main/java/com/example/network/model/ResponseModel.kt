@@ -1,12 +1,17 @@
 package com.example.network.model
 
-data class EventResponse(val _embedded: ListEvents)
-data class ListEvents(val events: List<Event>)
-data class Image(val url: String, )
+data class PhotosResponse(
+    val success: Boolean,
+    val message:String,
+    val offset: Int,
+    val limit: Int,
+    val photos: List<Photo>)
 
-data class Event(
-    val name: String,
-    val locale: String,
-    val images: List<Image>
+data class ListPhotos(val events: List<Photo>)
+
+data class Photo(
+    val title: String,
+    val url: String,
+    val description: String,
 )
 

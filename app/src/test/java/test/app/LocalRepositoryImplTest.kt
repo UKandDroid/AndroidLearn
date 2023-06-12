@@ -1,7 +1,7 @@
 package test.app
 
-import com.example.network.model.ListEvents
-import com.example.core.entity.EventEntity
+import com.example.network.model.ListPhotos
+import com.example.core.entity.PhotoEntity
 import com.example.core.entity.EventModel
 import com.example.core.room.EventDatabase
 import com.example.network.NetworkRepository
@@ -53,7 +53,7 @@ class LocalRepositoryImplTest {
     @Test
     fun `getEvents should return a list of EventEntity`() = runTest {
         val name = "Shania Twain"
-        val expectedEvents = listOf(EventEntity(0,"Queen of me", "Tour", "some_url"))
+        val expectedEvents = listOf(PhotoEntity(0,"Queen of me", "Tour", "some_url"))
        every{ mockEventsDb.getEvents(name)} returns expectedEvents
 
         val result = localRepository.getEvents(name)
@@ -63,8 +63,8 @@ class LocalRepositoryImplTest {
 
     @Test
     fun `refreshEvents should return false when network call is unsuccessful`() = runTest {
-        val mockResponse = ResponseWrapper.ApiError<ListEvents>(-1, "Error")
-        coEvery { mockNetworkRepository.getAllEvents()} returns mockResponse
+        val mockResponse = ResponseWrapper.ApiError<ListPhotos>(-1, "Error")
+        coEvery { mockNetworkRepository.getAllPhotos()} returns mockResponse
 
         val result = localRepository.refreshEvents()
 
