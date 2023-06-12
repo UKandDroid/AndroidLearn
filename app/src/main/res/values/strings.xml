@@ -1,3 +1,6 @@
 <resources>
-    <string name="app_name">TicketMaster</string>
+    <string name="app_name">TestApp</string>
+    <string name="loading">Loading…</string>
+    <string name="failed_to_refresh">Failed to refresh, please try again</string>
+    <string name="no_items_found">No matching items found</string>
 </resources>

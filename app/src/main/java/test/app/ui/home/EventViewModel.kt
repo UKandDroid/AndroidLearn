@@ -1,36 +1,33 @@
 package test.app.ui.home
 
-import android.content.res.Resources
-import android.provider.Settings.Global.getString
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import test.app.R
 import test.app.domain.model.ui.EventItem
+import test.app.domain.model.ui.MessageItem
+import test.app.domain.model.ui.ScreenListItem
 import test.app.domain.repo.LocalRepository
-import test.app.domain.repo.LocalRepositoryImpl
-import test.app.domain.util.FAILED_TO_REFRESH
-import test.app.domain.util.NO_MATCHING_ITEM
+import test.app.domain.util.StringRes
 import javax.inject.Inject
 
 @HiltViewModel
 class EventViewModel @Inject constructor(
     private val localRepository: LocalRepository,
+    private val strRes: StringRes
 ) : ViewModel() {
 
-    private var _uiState: MutableState<UiStates> = mutableStateOf(UiStates.EventsUpdate("Loading..."))
-    val uiState: State<UiStates> = _uiState
+    private var _uiState: MutableState<UiStates> = mutableStateOf(UiStates.EventsUpdate(strRes.LOADING))
     private val _isLoading = mutableStateOf(false)
+    val uiState: State<UiStates> = _uiState
     val isLoading: State<Boolean> = _isLoading
 
     init {
-      refreshEvents()
+        refreshEvents()
     }
 
     fun refreshEvents() {
@@ -39,15 +36,12 @@ class EventViewModel @Inject constructor(
             val success = localRepository.refreshEvents()
 
             launch {
-                delay(1000)                         // keep it for a second, so it does not look like a glitch
+                delay(500)                         // keep spinner for half a second, so it does not look like a glitch
                 _isLoading.value = false
             }
 
-           _uiState.value = if(success) {
-               UiStates.ListEvents(localRepository.getAllEvents().map { EventItem(it.name, it.desc, it.url) })
-            } else {
-               UiStates.EventsUpdate(FAILED_TO_REFRESH)
-            }
+            val listEvents: List<ScreenListItem> =  localRepository.getAllEvents().map { EventItem(it.name, it.desc, it.url) }
+            _uiState.value = UiStates.ListEvents(if(success) listEvents else listEvents + MessageItem(strRes.FAILED_TO_REFRESH))
 
         }
     }
@@ -57,9 +51,9 @@ class EventViewModel @Inject constructor(
             val searchResult = localRepository.getEvents(search)
 
             _uiState.value = if(searchResult.isNotEmpty()) {
-                UiStates.ListEvents( searchResult.map { EventItem(it.name, it.desc, it.url) })
+                UiStates.ListEvents(searchResult.map { EventItem(it.name, it.desc, it.url) })
             } else {
-                UiStates.EventsUpdate(NO_MATCHING_ITEM)
+                UiStates.EventsUpdate(strRes.NO_MATCHING_ITEM)
             }
         }
     }

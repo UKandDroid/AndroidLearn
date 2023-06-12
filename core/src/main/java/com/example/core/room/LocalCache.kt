@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 import com.example.core.entity.EventEntity
 
 @Database(entities = [EventEntity::class], version = 1)
-abstract class RoomDatabase: RoomDatabase() {
+abstract class LocalCache: RoomDatabase() {
 
     abstract fun getMessageDao(): EventDatabase
 }

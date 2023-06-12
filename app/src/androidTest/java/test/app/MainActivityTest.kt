@@ -9,7 +9,7 @@ import test.app.domain.model.ui.EventItem
 import test.app.domain.model.ui.MessageItem
 import test.app.domain.util.FAILED_TO_REFRESH
 import test.app.domain.util.NO_MATCHING_ITEM
-import test.app.ui.components.EventWindowComponent
+import test.app.ui.compose.components.EventWindowComponent
 
 
 class MainActivityTest {

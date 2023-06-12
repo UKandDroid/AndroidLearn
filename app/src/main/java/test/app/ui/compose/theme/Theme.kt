@@ -1,4 +1,4 @@
-package test.app.ui.theme
+package test.app.ui.compose.theme
 
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors

@@ -1,4 +1,4 @@
-package test.app.ui.components
+package test.app.ui.compose.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -22,7 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import test.app.ui.theme.ForestFrost
+import test.app.ui.compose.theme.ForestFrost
 
 
 @Composable

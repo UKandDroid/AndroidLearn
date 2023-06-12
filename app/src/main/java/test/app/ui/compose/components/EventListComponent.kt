@@ -1,4 +1,4 @@
-package test.app.ui.components
+package test.app.ui.compose.components
 
 import androidx.compose.foundation.layout.*
 

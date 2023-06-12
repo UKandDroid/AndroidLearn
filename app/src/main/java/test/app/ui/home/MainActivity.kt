@@ -1,4 +1,4 @@
-package test.app
+package test.app.ui.home
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -8,9 +8,9 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.getValue
 import dagger.hilt.android.AndroidEntryPoint
+import test.app.ui.compose.components.EventWindowComponent
 import test.app.ui.home.EventViewModel
-import test.app.ui.components.EventWindowComponent
-import test.app.ui.theme.TestAppTheme
+import test.app.ui.compose.theme.TestAppTheme
 
 
 @AndroidEntryPoint

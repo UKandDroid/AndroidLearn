@@ -1,4 +1,4 @@
-package test.app.ui.components
+package test.app.ui.compose.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -12,7 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import test.app.ui.theme.ForestFrost
+import test.app.ui.compose.theme.ForestFrost
 
 @Composable
 fun MessageItemComponent(title: String) {
