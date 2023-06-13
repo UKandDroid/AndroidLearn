@@ -15,19 +15,20 @@ import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import test.app.domain.model.ui.InfoItem
 import test.app.domain.model.ui.PhotoItem
 import test.app.domain.repo.LocalRepository
 import test.app.domain.util.StringRes
-import test.app.ui.home.ActivityViewModel
+import test.app.ui.home.MainViewModel
 import test.app.ui.home.UiStates
 
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class EventViewModelTest {
+class MainViewModelTest {
 
     private val mockLocalRepository = mockk<LocalRepository>()
     private  val stringRes = mockk<StringRes>()
-    private lateinit var testSubject: ActivityViewModel
+    private lateinit var testSubject: MainViewModel
     private val testDispatcher = StandardTestDispatcher()
 
     @Before
@@ -37,7 +38,7 @@ class EventViewModelTest {
         every { stringRes.NO_MATCHING_ITEM } returns "No matching items found"
 
         Dispatchers.setMain(testDispatcher)
-        testSubject = ActivityViewModel(mockLocalRepository, stringRes)
+        testSubject = MainViewModel(mockLocalRepository, stringRes)
 
     }
 
@@ -50,12 +51,12 @@ class EventViewModelTest {
     fun `refreshEvents should update uiState with list of events when successful`() = runTest {
 
         coEvery { mockLocalRepository.refreshPhotos() } returns  true
-        coEvery { mockLocalRepository.getAllPhotos() } returns  mockEventList
+        coEvery { mockLocalRepository.getAllPhotos() } returns  testPhotoList
 
         testSubject.refreshEvents()
         testDispatcher.scheduler.advanceUntilIdle()
 
-        assertEquals(UiStates.ListEvents(mockEventList.map { PhotoItem(it.name, it.desc, it.url) }), testSubject.uiState.value)
+        assertEquals(UiStates.ListEvents(testPhotoList.map { PhotoItem(it.name, it.desc, it.url) }), testSubject.uiState.value)
     }
 
     @Test
@@ -67,20 +68,20 @@ class EventViewModelTest {
         testSubject.refreshEvents()
         testDispatcher.scheduler.advanceUntilIdle()
 
-        assertEquals(UiStates.EventsUpdate("Failed to refresh, please try again"), testSubject.uiState.value)
+        assertEquals(UiStates.ListEvents(listOf(InfoItem("Failed to refresh, please try again"))), testSubject.uiState.value)
     }
 
     @Test
     fun `eventSearch should update uiState with list of events when search result is not empty`() = runTest {
 
         coEvery { mockLocalRepository.refreshPhotos() } returns  true
-        coEvery { mockLocalRepository.getAllPhotos() } returns  mockEventList
-        coEvery { mockLocalRepository.getPhotoByTitle("search") } returns  mockEventList
+        coEvery { mockLocalRepository.getAllPhotos() } returns  testPhotoList
+        coEvery { mockLocalRepository.getPhotoByTitle("search") } returns  testPhotoList
 
         testSubject.eventSearch("search")
         testDispatcher.scheduler.advanceUntilIdle()
 
-        assertEquals(UiStates.ListEvents(mockEventList.map { PhotoItem(it.name, it.desc, it.url) }), testSubject.uiState.value)
+        assertEquals(UiStates.ListEvents(testPhotoList.map { PhotoItem(it.name, it.desc, it.url) }), testSubject.uiState.value)
     }
 
     @Test
@@ -97,7 +98,7 @@ class EventViewModelTest {
         assertEquals(UiStates.EventsUpdate("No matching items found"), uiState.value)
     }
 
-    private val mockEventList = listOf(
+    private val testPhotoList = listOf(
         PhotoEntity(0,"Queen of me 1", "en-us-1", "url_1"),
         PhotoEntity(1,"Queen of me 2", "en-us-2", "url_2")
     )

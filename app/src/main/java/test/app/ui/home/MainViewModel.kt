@@ -16,7 +16,7 @@ import test.app.domain.util.StringRes
 import javax.inject.Inject
 
 @HiltViewModel
-class ActivityViewModel @Inject constructor(
+class MainViewModel @Inject constructor(
     private val localRepository: LocalRepository,
     private val strRes: StringRes
 ) : ViewModel() {

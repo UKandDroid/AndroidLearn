@@ -10,8 +10,5 @@ import retrofit2.http.GET
 interface RemoteApi {
 
     @GET("/v1/sample-data/photos")
-    suspend fun getPhotos(): Response<PhotosResponse>
-
-    @GET("/v1/sample-data/photos")
     suspend fun getAllPhotos(): Response<PhotosResponse>
 }
