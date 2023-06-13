@@ -7,7 +7,7 @@ data class PhotosResponse(
     val limit: Int,
     val photos: List<Photo>)
 
-data class ListPhotos(val events: List<Photo>)
+data class ListPhotos(val listPhotos: List<Photo>)
 
 data class Photo(
     val title: String,

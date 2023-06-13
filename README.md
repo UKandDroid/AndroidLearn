@@ -6,12 +6,12 @@ The app logic covers edge cases for network request failure and no search result
 and loads local data from cache on request failure.
 
 # TechStack
+- The app uses MVVM design pattern
 - The app uses Dagger/Hilt for DI
 - The app uses clean architecture.
 - Room Repository for local storage
 - Retrofit for api calls
 - The compose for UI
-- The api key is injected using retrofit interceptor
 
 # Tests
 Unit tests

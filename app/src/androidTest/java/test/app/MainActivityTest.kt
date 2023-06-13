@@ -3,17 +3,16 @@ package test.app
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
-import androidx.test.platform.app.InstrumentationRegistry
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import test.app.domain.model.ui.PhotoItem
-import test.app.domain.model.ui.InfoItem
+import test.app.domain.model.PhotoItem
+import test.app.domain.model.InfoItem
 import test.app.domain.util.StringRes
 
-import test.app.ui.compose.components.EventWindowComponent
+import test.app.ui.compose.components.MainWindowComponent
 
 
 class MainActivityTest {
@@ -31,12 +30,12 @@ class MainActivityTest {
 
     @Test
     fun network_error_is_displayed() {
-        val events = listOf(
+        val items = listOf(
             InfoItem(stringRes.FAILED_TO_REFRESH),
         )
 
         composeTestRule.setContent {
-            EventWindowComponent(isLoading = false, listPhotos = events, {}, {})
+            MainWindowComponent(isLoading = false, listPhotos = items, {}, {})
         }
 
         composeTestRule.onNodeWithText(stringRes.FAILED_TO_REFRESH).assertIsDisplayed()
@@ -45,12 +44,12 @@ class MainActivityTest {
 
     @Test
     fun no_search_result_is_displayed() {
-        val events = listOf(
+        val items = listOf(
             InfoItem(stringRes.NO_MATCHING_ITEM),
         )
 
         composeTestRule.setContent {
-            EventWindowComponent(isLoading = false, listPhotos = events, {}, {})
+            MainWindowComponent(isLoading = false, listPhotos = items, {}, {})
         }
 
         composeTestRule.onNodeWithText(stringRes.NO_MATCHING_ITEM).assertIsDisplayed()
@@ -58,7 +57,7 @@ class MainActivityTest {
 
     @Test
     fun list_of_photos_is_displayed() {
-        val events = listOf(
+        val items = listOf(
             PhotoItem(
                 "Disco somewhere or anywhere",
                 "Artist included",
@@ -72,7 +71,7 @@ class MainActivityTest {
         )
 
         composeTestRule.setContent {
-            EventWindowComponent(isLoading = false, listPhotos = events, {}, {})
+            MainWindowComponent(isLoading = false, listPhotos = items, {}, {})
         }
 
         composeTestRule.onNodeWithText("Disco somewhere or anywhere").assertIsDisplayed()

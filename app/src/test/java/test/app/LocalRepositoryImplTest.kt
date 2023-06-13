@@ -2,8 +2,8 @@ package test.app
 
 import com.example.network.model.ListPhotos
 import com.example.core.entity.PhotoEntity
-import com.example.core.entity.EventModel
-import com.example.core.room.EventDatabase
+import com.example.core.entity.PhotoModel
+import com.example.core.room.PhotoDatabase
 import com.example.network.NetworkRepository
 import com.example.network.ResponseWrapper
 import io.mockk.coEvery
@@ -24,47 +24,47 @@ import test.app.domain.repo.LocalRepositoryImpl
 @OptIn(ExperimentalCoroutinesApi::class)
 class LocalRepositoryImplTest {
 
-    private val mockEventsDb = mockk<EventDatabase>()
-    private val mockNetworkRepository = mockk< NetworkRepository>()
+    private val photosDb = mockk<PhotoDatabase>()
+    private val mockNetworkRepository = mockk<NetworkRepository>()
     private lateinit var localRepository: LocalRepositoryImpl
     private val testDispatcher = StandardTestDispatcher()
 
     @Before
     fun setup() {
         Dispatchers.setMain(testDispatcher)
-        localRepository = LocalRepositoryImpl(mockEventsDb, mockNetworkRepository)
+        localRepository = LocalRepositoryImpl(photosDb, mockNetworkRepository)
     }
 
     @After
-    fun tearDown(){
+    fun tearDown() {
         Dispatchers.resetMain()
     }
 
     @Test
-    fun `getAllEvents should return a list of EventModel`() = runTest {
-        val expectedEvents = listOf(EventModel(0,"Queen of me", "Tour", "some_url"))
-        every{mockEventsDb.getEvents()} returns expectedEvents
+    fun `getPhotos should return a list of PhotoModel`() = runTest {
+        val expectedPhotos = listOf(PhotoModel(0, "Some picture", "Some picture of Some picture", "picture_url"))
+        every { photosDb.getPhotos() } returns expectedPhotos
 
         val result = localRepository.getAllPhotos()
 
-        assertEquals(expectedEvents, result)
+        assertEquals(expectedPhotos, result)
     }
 
     @Test
-    fun `getEvents should return a list of EventEntity`() = runTest {
-        val name = "Shania Twain"
-        val expectedEvents = listOf(PhotoEntity(0,"Queen of me", "Tour", "some_url"))
-       every{ mockEventsDb.getEvents(name)} returns expectedEvents
+    fun `getPhotos should return a list of PhotoEntity`() = runTest {
+        val name = "Some picture"
+        val expectedPhotos = listOf(PhotoEntity(0, "Some picture", "Some picture of Some picture", "picture_url"))
+        every { photosDb.getPhotos(name) } returns expectedPhotos
 
         val result = localRepository.getPhotoByTitle(name)
 
-        assertEquals(expectedEvents, result)
+        assertEquals(expectedPhotos, result)
     }
 
     @Test
-    fun `refreshEvents should return false when network call is unsuccessful`() = runTest {
+    fun `refreshPhotos should return false when network call is unsuccessful`() = runTest {
         val mockResponse = ResponseWrapper.ApiError<ListPhotos>(-1, "Error")
-        coEvery { mockNetworkRepository.getAllPhotos()} returns mockResponse
+        coEvery { mockNetworkRepository.getAllPhotos() } returns mockResponse
 
         val result = localRepository.refreshPhotos()
 

@@ -1,4 +1,4 @@
-package test.app.domain.model.ui
+package test.app.domain.model
 
 sealed class ScreenListItem
 data class InfoItem(val message: String): ScreenListItem()

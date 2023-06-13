@@ -10,12 +10,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import test.app.domain.model.ui.PhotoItem
-import test.app.domain.model.ui.InfoItem
-import test.app.domain.model.ui.ScreenListItem
+import test.app.domain.model.PhotoItem
+import test.app.domain.model.InfoItem
+import test.app.domain.model.ScreenListItem
 
 @Composable
-fun EventListComponent(
+fun PhotoListComponent(
     modifier: Modifier,
     photoList: List<ScreenListItem>,
 ) {
@@ -30,18 +30,18 @@ fun EventListComponent(
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
 
-        items(items = photoList) { event ->
-            when (event) {
+        items(items = photoList) { photo ->
+            when (photo) {
                 is PhotoItem -> {
-                    EventItemComponent(
-                        name = event.name,
-                        desc = event.desc,
-                        imageUrl = event.url,
+                    PhotoItemComponent(
+                        name = photo.name,
+                        desc = photo.desc,
+                        imageUrl = photo.url,
                     )
                 }
 
                 is InfoItem -> {
-                    MessageItemComponent(title = event.message)
+                    MessageItemComponent(title = photo.message)
                 }
             }
         }

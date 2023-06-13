@@ -7,5 +7,5 @@ import com.example.core.entity.PhotoEntity
 @Database(entities = [PhotoEntity::class], version = 1)
 abstract class LocalCache: RoomDatabase() {
 
-    abstract fun getMessageDao(): EventDatabase
+    abstract fun getMessageDao(): PhotoDatabase
 }

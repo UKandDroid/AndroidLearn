@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 
 @Composable
-fun EventItemComponent(
+fun PhotoItemComponent(
     name: String,
     desc: String,
     imageUrl: String
@@ -50,7 +50,7 @@ fun EventItemComponent(
 @Preview
 @Composable
 fun PreviewImageWithTextCard() {
-    EventItemComponent(
+    PhotoItemComponent(
         name = "Disco somewhere or anywhere",
         desc = "Artist included",
         imageUrl = "https://somewhere.drawable.ic_launcher_foreground"

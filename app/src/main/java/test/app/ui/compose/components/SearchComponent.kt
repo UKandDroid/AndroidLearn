@@ -45,6 +45,7 @@ fun SearchComponent(
             Row(modifier = Modifier.weight(1f), verticalAlignment = Alignment.Bottom) {
                 OutlinedTextField(
                     value = searchText,
+                    singleLine = true,
                     onValueChange = { searchText = it },
                     placeholder = {Text("Search  ")},
                     modifier = Modifier.weight(0.75f).padding(10.dp).height(IntrinsicSize.Min).focusRequester(focusRequester),

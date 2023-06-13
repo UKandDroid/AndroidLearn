@@ -8,7 +8,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.getValue
 import dagger.hilt.android.AndroidEntryPoint
-import test.app.ui.compose.components.EventWindowComponent
+import test.app.ui.compose.components.MainWindowComponent
 import test.app.ui.compose.theme.TestAppTheme
 
 
@@ -26,14 +26,14 @@ class MainActivity : ComponentActivity() {
                 val isLoading by viewModel.isLoading
 
                 Surface(color = MaterialTheme.colors.background) {
-                    EventWindowComponent(
+                    MainWindowComponent(
                         isLoading,
                         listPhotos = uiState.items,
                         onSearchClick = {
-                            viewModel.eventSearch(it)
+                            viewModel.photoSearch(it)
                         },
                         onRefresh = {
-                            viewModel.refreshEvents()
+                            viewModel.refreshPhotos()
                         } )
                 }
             }

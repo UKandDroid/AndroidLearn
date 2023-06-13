@@ -10,13 +10,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import test.app.domain.model.ui.ScreenListItem
-import test.app.domain.model.ui.PhotoItem
+import test.app.domain.model.ScreenListItem
+import test.app.domain.model.PhotoItem
 
 
 @SuppressLint("SuspiciousIndentation")
 @Composable
-fun EventWindowComponent(
+fun MainWindowComponent(
     isLoading: Boolean,
     listPhotos: List<ScreenListItem>,
     onSearchClick: (String) -> Unit,
@@ -35,7 +35,7 @@ fun EventWindowComponent(
             SwipeRefresh(
                 state = swipeRefreshState,
                 onRefresh = onRefresh){
-                EventListComponent(
+                PhotoListComponent(
                     modifier = Modifier
                         .weight(1.0f)
                         .fillMaxHeight()
@@ -52,8 +52,8 @@ fun EventWindowComponent(
 
 @Preview
 @Composable
-fun PreviewChat(){
-    EventWindowComponent( false, listPhotos = listOf(
+fun PreviewWindow(){
+    MainWindowComponent( false, listPhotos = listOf(
         PhotoItem("Hi there", "true", "true"),
         PhotoItem("ohh hello", "false", "true"),
         PhotoItem("Sorry wrong number ", "true", "true"),

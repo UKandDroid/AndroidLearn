@@ -8,9 +8,9 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import test.app.domain.model.ui.PhotoItem
-import test.app.domain.model.ui.InfoItem
-import test.app.domain.model.ui.ScreenListItem
+import test.app.domain.model.PhotoItem
+import test.app.domain.model.InfoItem
+import test.app.domain.model.ScreenListItem
 import test.app.domain.repo.LocalRepository
 import test.app.domain.util.StringRes
 import javax.inject.Inject
@@ -21,16 +21,16 @@ class MainViewModel @Inject constructor(
     private val strRes: StringRes
 ) : ViewModel() {
 
-    private var _uiState: MutableState<UiStates> = mutableStateOf(UiStates.EventsUpdate(strRes.LOADING))
+    private var _uiState: MutableState<UiStates> = mutableStateOf(UiStates.PhotosUpdate(strRes.LOADING))
     private val _isLoading = mutableStateOf(false)
     val uiState: State<UiStates> = _uiState
     val isLoading: State<Boolean> = _isLoading
 
     init {
-        refreshEvents()
+        refreshPhotos()
     }
 
-    fun refreshEvents() {
+    fun refreshPhotos() {
         viewModelScope.launch {
             _isLoading.value = true
             val success = localRepository.refreshPhotos()
@@ -40,20 +40,20 @@ class MainViewModel @Inject constructor(
                 _isLoading.value = false
             }
 
-            val listEvents: List<ScreenListItem> =  localRepository.getAllPhotos().map { PhotoItem(it.name, it.desc, it.url) }
-            _uiState.value = UiStates.ListEvents(if(success) listEvents else listEvents + InfoItem(strRes.FAILED_TO_REFRESH))
+            val listPhotos: List<ScreenListItem> =  localRepository.getAllPhotos().map { PhotoItem(it.title, it.desc, it.url) }
+            _uiState.value = UiStates.ListPhotos(if(success) listPhotos else listPhotos + InfoItem(strRes.FAILED_TO_REFRESH))
 
         }
     }
 
-    fun eventSearch(search: String) {
+    fun photoSearch(search: String) {
         viewModelScope.launch {
             val searchResult = localRepository.getPhotoByTitle(search)
 
             _uiState.value = if(searchResult.isNotEmpty()) {
-                UiStates.ListEvents(searchResult.map { PhotoItem(it.name, it.desc, it.url) })
+                UiStates.ListPhotos(searchResult.map { PhotoItem(it.title, it.desc, it.url) })
             } else {
-                UiStates.EventsUpdate(strRes.NO_MATCHING_ITEM)
+                UiStates.PhotosUpdate(strRes.NO_MATCHING_ITEM)
             }
         }
     }
