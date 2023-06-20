@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ChatChallenge</string>
+    <string name="app_name">TestChat</string>
     <string name="loading">Loading…</string>
     <string name="this_is_the_start">"This is the start of your chat!"…</string>
 

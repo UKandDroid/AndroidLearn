@@ -32,7 +32,7 @@ class ChatConvertorTest {
 
     @Before
     fun setup() {
-        testSubject = ChatConvertor(repository)
+        testSubject = ChatConvertor()
     }
 
     @Test
@@ -41,7 +41,7 @@ class ChatConvertorTest {
         val mockFlow = flowOf(emptyList<MessageModel>())
         whenever(repository.getAllMessages()).thenReturn(mockFlow)
 
-        val resultFlow = testSubject.convertChat()
+        val resultFlow = testSubject.convertChat(repository)
 
         verify(repository, times(1)).getAllMessages()
         assertEquals(0, resultFlow.first().size)
@@ -55,7 +55,7 @@ class ChatConvertorTest {
 
         whenever(repository.getAllMessages()).thenReturn(mockFlow)
 
-        val resultFlow = testSubject.convertChat()
+        val resultFlow = testSubject.convertChat(repository)
 
         verify(repository, times(1)).getAllMessages()
         resultFlow.first().let {
@@ -72,7 +72,7 @@ class ChatConvertorTest {
 
         whenever(repository.getAllMessages()).thenReturn(mockFlow)
 
-        val resultFlow = testSubject.convertChat()
+        val resultFlow = testSubject.convertChat(repository)
 
         verify(repository, times(1)).getAllMessages()
         resultFlow.first().let {
@@ -99,7 +99,7 @@ class ChatConvertorTest {
 
         whenever(repository.getAllMessages()).thenReturn(mockFlow)
 
-        val resultFlow = testSubject.convertChat()
+        val resultFlow = testSubject.convertChat(repository)
 
         verify(repository, times(1)).getAllMessages()
         resultFlow.first().let {
@@ -120,7 +120,7 @@ class ChatConvertorTest {
 
         whenever(repository.getAllMessages()).thenReturn(mockFlow)
 
-        val resultFlow = testSubject.convertChat()
+        val resultFlow = testSubject.convertChat(repository)
 
         verify(repository, times(1)).getAllMessages()
         resultFlow.first().let {

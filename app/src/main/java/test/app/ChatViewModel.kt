@@ -16,6 +16,8 @@ import test.app.data.StringRes
 import test.app.domain.model.ui.ChatItem
 import test.app.domain.model.ui.MessageItem
 import test.app.domain.model.ui.SectionItem
+import test.app.domain.repo.AppDispatcherProvider
+import test.app.domain.repo.DispatcherProvider
 import test.app.domain.repo.LocalRepository
 import test.app.domain.util.ChatConvertor
 import test.app.domain.util.ChatSearcher
@@ -27,13 +29,15 @@ import javax.inject.Inject
 @HiltViewModel
 class ChatViewModel @Inject constructor(
     private val localRepository: LocalRepository,
+    private val chatConvertor: ChatConvertor,
+    private val dispatcherProvider: DispatcherProvider,
     strRes: StringRes
 ) : ViewModel() {
 
     private var _user = DEFAULT_USER
     private val searchFlow: MutableSharedFlow<List<ChatItem>> = MutableSharedFlow()
 
-    val uiState: StateFlow<ChatUiState> = merge(searchFlow, ChatConvertor().convertChat(localRepository))
+    val uiState: StateFlow<ChatUiState> = merge(searchFlow, chatConvertor.convertChat(localRepository))
         .map { items ->
             ChatUiState(chatItems = items, scrollTo = getItemPositionInList(items))
         }.stateIn(
@@ -53,7 +57,7 @@ class ChatViewModel @Inject constructor(
     }
 
     fun userSearch(text: String) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatcherProvider.IO) {
             searchFlow.emit(ChatSearcher().search(uiState.value.chatItems, text).first())
 
         }
