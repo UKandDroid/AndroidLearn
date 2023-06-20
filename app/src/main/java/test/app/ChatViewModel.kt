@@ -27,16 +27,13 @@ import javax.inject.Inject
 @HiltViewModel
 class ChatViewModel @Inject constructor(
     private val localRepository: LocalRepository,
-    private val chatConvertor: ChatConvertor,
-    private val searchChat: ChatSearcher,
-    private val strRes: StringRes
+    strRes: StringRes
 ) : ViewModel() {
 
     private var _user = DEFAULT_USER
-
     private val searchFlow: MutableSharedFlow<List<ChatItem>> = MutableSharedFlow()
 
-    val uiState: StateFlow<ChatUiState> = merge(searchFlow, chatConvertor.convertChat())
+    val uiState: StateFlow<ChatUiState> = merge(searchFlow, ChatConvertor().convertChat(localRepository))
         .map { items ->
             ChatUiState(chatItems = items, scrollTo = getItemPositionInList(items))
         }.stateIn(
@@ -57,7 +54,7 @@ class ChatViewModel @Inject constructor(
 
     fun userSearch(text: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            searchFlow.emit(searchChat.search(uiState.value.chatItems, text).first())
+            searchFlow.emit(ChatSearcher().search(uiState.value.chatItems, text).first())
 
         }
     }

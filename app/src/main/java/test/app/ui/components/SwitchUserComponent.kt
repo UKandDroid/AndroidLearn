@@ -1,5 +1,6 @@
 package test.app.ui.components
 
+import android.R
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -59,6 +60,7 @@ fun SwitchUserComponent(
             Row(modifier = Modifier.weight(1f).fillMaxWidth()) {
                 BasicTextField(searchText,
                     onValueChange = { searchText = it; onSearch(it)},
+                    singleLine = true,
                     textStyle = TextStyle(
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Medium,

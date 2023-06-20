@@ -10,9 +10,9 @@ import test.app.domain.repo.LocalRepository
 
 import javax.inject.Inject
 
-class ChatConvertor @Inject constructor(private val cache: LocalRepository) {
+class ChatConvertor {
 
-    fun convertChat(): Flow<List<ChatItem>> {
+    fun convertChat( cache: LocalRepository): Flow<List<ChatItem>> {
         return cache.getAllMessages().convert().map {
             it.convert()
         }
